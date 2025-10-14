@@ -342,6 +342,8 @@ body {
     overflow: hidden;
     cursor: pointer;
     transition: transform 0.3s;
+    background: var(--light-gray);
+    position: relative;
 }
 
 .gallery-item:hover {
@@ -352,6 +354,10 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 /* Contact */

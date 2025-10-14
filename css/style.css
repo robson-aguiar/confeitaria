@@ -686,12 +686,45 @@ body {
 .fade-in {
     opacity: 0;
     transform: translateY(50px);
-    transition: opacity 1s ease, transform 1s ease;
+    transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .fade-in.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Animação de entrada suave */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.product-section, .gallery-section, .testimonials-section, .faq-section {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-content {
+    animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.hero-image {
+    animation: fadeIn 1.5s ease-out;
 }
 
 .parallax-section .hero-image {
@@ -834,20 +867,33 @@ a, button, .product-cta, .hero-cta, .contact-cta {
 
 /* Responsive */
 @media (max-width: 768px) {
+    .nav-container {
+        padding: 1rem;
+    }
+    
     .nav-menu {
-        gap: 1.5rem;
+        gap: 1rem;
     }
 
     .nav-menu a {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
     }
     
     .cart-button {
-        margin-left: 1rem;
+        margin-left: 0.5rem;
     }
 
     .hero-title {
         font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .hero-cta {
+        padding: 0.875rem 2rem;
+        font-size: 0.95rem;
     }
 
     .product-content {
@@ -858,9 +904,18 @@ a, button, .product-cta, .hero-cta, .contact-cta {
     .product-content.reverse {
         direction: ltr;
     }
+    
+    .product-text {
+        padding: 1rem;
+    }
 
     .product-image {
-        height: 400px;
+        height: 350px;
+    }
+    
+    .product-cta {
+        padding: 0.875rem 2rem;
+        font-size: 0.95rem;
     }
 
     .gallery-grid {
@@ -868,12 +923,62 @@ a, button, .product-cta, .hero-cta, .contact-cta {
         gap: 0.75rem;
     }
     
+    .gallery-filters {
+        gap: 0.5rem;
+    }
+    
+    .filter-btn {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.85rem;
+    }
+    
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .testimonial-card {
+        padding: 1.5rem;
+    }
+    
+    .faq-question {
+        font-size: 1rem;
+        padding: 1.25rem 0;
+    }
+    
+    .contact-title {
+        font-size: 2rem;
+    }
+    
+    .contact-subtitle {
+        font-size: 1rem;
+    }
+    
+    .contact-cta, .contact-instagram {
+        padding: 0.875rem 2rem;
+        font-size: 0.95rem;
+    }
+    
     .options-grid {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0.75rem;
     }
     
     .modal-container {
-        padding: 2rem;
-        margin: 10% 1rem;
+        padding: 2rem 1.5rem;
+        margin: 5% 1rem;
+        max-height: 90vh;
+    }
+    
+    .modal-title {
+        font-size: 2rem;
+    }
+    
+    .modal-description {
+        font-size: 1rem;
+    }
+    
+    .builder-step h3 {
+        font-size: 1.25rem;
     }
 }

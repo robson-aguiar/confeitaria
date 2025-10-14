@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vera Lúcia Confeitaria - Bolos artesanais que transformam momentos em memórias">
+    <title>Vera Lúcia Confeitaria</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Menu Minimalista -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">Vera Lúcia</a>
+            <ul class="nav-menu">
+                <li><a href="#bolos-decorados">Bolos</a></li>
+                <li><a href="#paes">Pães</a></li>
+                <li><a href="#galeria">Galeria</a></li>
+                <li><a href="javascript:void(0)" onclick="openCakeCalculator()">Calculadora</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+            <button class="cart-button" onclick="openCart()" aria-label="Carrinho">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 2L7 6H3L6 20H18L21 6H17L15 2H9Z"/>
+                    <path d="M9 10V14"/>
+                    <path d="M15 10V14"/>
+                </svg>
+                <span id="cart-badge" class="cart-badge">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Full-Screen -->
+    <section id="home" class="hero-section parallax-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Sabor que<br>transforma momentos</h1>
+            <p class="hero-subtitle">Bolos decorados | Bolos caseirinhos | Pães artesanais | Doces e salgados</p>
+            <a href="javascript:void(0)" class="hero-cta" onclick="openCakeBuilder()">
+                Monte seu bolo personalizado
+            </a>
+        </div>
+        <div class="hero-image">
+            <img src="images/downloadgram.org_537499987_17954578145989810_7172687175539727990_n.jpg" alt="Bolo artesanal">
+        </div>
+    </section>
+
+    <!-- Seção Bolos Decorados -->
+    <section id="bolos-decorados" class="product-section fade-in">
+        <div class="product-content">
+            <div class="product-text">
+                <h2 class="product-title">Bolos Decorados</h2>
+                <p class="product-description">R$ 80,00/kg | 17 massas | 3 tipos de recheios | Coberturas personalizadas</p>
+                <button class="product-cta" onclick="openCakeBuilder()">
+                    Montar meu bolo
+                </button>
+            </div>
+            <div class="product-image">
+                <img src="images/downloadgram.org_461696459_1165667781194474_2951026535375491126_n.jpg" alt="Bolo decorado">
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Bolos Simples -->
+    <section id="bolos-simples" class="product-section dark fade-in">
+        <div class="product-content reverse">
+            <div class="product-image">
+                <img src="images/downloadgram.org_457382554_1026020162334312_7495785475087312093_n.jpeg" alt="Bolo simples">
+            </div>
+            <div class="product-text">
+                <h2 class="product-title">Bolos Caseirinhos</h2>
+                <p class="product-description">11 sabores deliciosos por apenas R$ 30,00 cada</p>
+                <button class="product-cta" onclick="openSimpleCakeBuilder()">
+                    Fazer pedido
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Pães -->
+    <section id="paes" class="product-section fade-in">
+        <div class="product-content">
+            <div class="product-text">
+                <h2 class="product-title">Pães Artesanais</h2>
+                <p class="product-description">Pães artesanais de fermentação natural | 500g por R$ 15,00</p>
+                <button class="product-cta" onclick="openProductModal('paes')">
+                    Ver mais
+                </button>
+            </div>
+            <div class="product-image">
+                <img src="images/pao.jpg" alt="Pães">
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeria -->
+    <section id="galeria" class="gallery-section fade-in">
+        <h2 class="gallery-title">Nossos Trabalhos</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="images/downloadgram.org_461696459_1165667781194474_2951026535375491126_n.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/downloadgram.org_491441920_17941518353989810_7528810505330933416_n.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/downloadgram.org_491445179_17941298519989810_5302708275154565688_n.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/downloadgram.org_500326630_17944514105989810_8843742206483996231_n.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/downloadgram.org_500445005_17944514042989810_9219063004013298111_n.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/downloadgram.org_500658581_17944514078989810_5785383886066996581_n.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/downloadgram.org_501058622_17944514033989810_8970938834600463667_n.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/downloadgram.org_501264420_17944514096989810_8872102859826452961_n.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/downloadgram.org_501542616_17944514021989810_343356933580456667_n.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/downloadgram.org_537499987_17954578145989810_7172687175539727990_n.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0001.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0003.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0005.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0008.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0016.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0018.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0020.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0022.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0025.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0028.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0030.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0033.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0035.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0038.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0040.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0043.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0045.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0048.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0050.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0053.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0055.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0058.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0060.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0063.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0065.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0068.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0070.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0073.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0075.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0078.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0080.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0083.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0085.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0088.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0090.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0093.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0095.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0098.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0100.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0105.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0110.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0115.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0120.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/IMG-20251013-WA0125.jpg" alt="Trabalho"></div>
+            <div class="gallery-item"><img src="images/downloadgram.org_457356707_1023632335977435_2778840969806108359_n.jpg" alt="Trabalho"></div>
+        </div>
+    </section>
+
+    <!-- Contato -->
+    <section id="contato" class="contact-section">
+        <div class="contact-content">
+            <h2 class="contact-title">Vamos criar algo especial juntos?</h2>
+            <p class="contact-subtitle">Entre em contato e faça seu pedido</p>
+            <a href="https://api.whatsapp.com/send/?phone=5519971307912" class="contact-cta" target="_blank">
+                Falar no WhatsApp
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Vera Lúcia Confeitaria. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Modal Produto -->
+    <div id="productModal" class="modal">
+        <div class="modal-overlay" onclick="closeProductModal()"></div>
+        <div class="modal-container">
+            <button class="modal-close" onclick="closeProductModal()">&times;</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

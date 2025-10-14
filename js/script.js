@@ -878,6 +878,33 @@ function openCakeCalculator() {
     document.body.style.overflow = 'hidden';
 }
 
+// Gallery Filter
+function filterGallery(category) {
+    const items = document.querySelectorAll('.gallery-item');
+    const buttons = document.querySelectorAll('.filter-btn');
+    
+    // Update active button
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Filter items
+    items.forEach(item => {
+        if (category === 'all' || item.dataset.category === category) {
+            item.style.display = 'block';
+            setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, 10);
+        } else {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            setTimeout(() => {
+                item.style.display = 'none';
+            }, 300);
+        }
+    });
+}
+
 // FAQ Toggle
 function toggleFAQ(button) {
     const faqItem = button.parentElement;
@@ -894,6 +921,17 @@ function toggleFAQ(button) {
     }
 }
 
+let eventType = 'normal';
+
+function selectEventType(type) {
+    eventType = type;
+    document.querySelectorAll('#event-normal, #event-special').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.getElementById(`event-${type}`).classList.add('active');
+    calculateCake();
+}
+
 function calculateCake() {
     const adults = parseInt(document.getElementById('calc-adults').value) || 0;
     const children = parseInt(document.getElementById('calc-children').value) || 0;
@@ -904,8 +942,11 @@ function calculateCake() {
         return;
     }
     
-    // 100g por adulto, 80g por criança
-    const totalGrams = (adults * 100) + (children * 80);
+    // Porções por tipo de evento
+    const adultPortion = eventType === 'special' ? 150 : 100;
+    const childPortion = eventType === 'special' ? 120 : 80;
+    
+    const totalGrams = (adults * adultPortion) + (children * childPortion);
     const exactKg = totalGrams / 1000;
     
     // Arredondar para 0.5kg (1kg, 1.5kg, 2kg, 2.5kg, etc.)
@@ -913,8 +954,10 @@ function calculateCake() {
     const finalKg = roundedKg < 1 ? 1 : roundedKg;
     
     const price = (finalKg * 80).toFixed(2);
+    const eventLabel = eventType === 'special' ? 'Casamento/Especial' : 'Festa Normal';
     
     result.innerHTML = `
+        <p><strong>🎉 Tipo:</strong> ${eventLabel}</p>
         <p><strong>👥 Total de pessoas:</strong> ${adults + children}</p>
         <p><strong>⚖️ Peso recomendado:</strong> ${finalKg} kg</p>
         <p><strong>💰 Valor estimado:</strong> R$ ${price}</p>

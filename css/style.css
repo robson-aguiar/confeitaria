@@ -253,6 +253,37 @@ body {
     background: var(--white);
 }
 
+.gallery-filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    background: var(--light-gray);
+    border: 2px solid transparent;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s;
+    color: var(--black);
+}
+
+.filter-btn:hover {
+    background: #e8e8ed;
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+}
+
 .gallery-title {
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 600;

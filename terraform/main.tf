@@ -36,9 +36,9 @@ resource "azurerm_linux_web_app" "app" {
   tags                = var.tags
 
   site_config {
-    always_on        = var.always_on
-    http2_enabled    = true
-    ftps_state       = "Disabled"
+    always_on           = var.always_on
+    http2_enabled       = true
+    ftps_state          = "Disabled"
     minimum_tls_version = "1.2"
     
     application_stack {
@@ -47,9 +47,11 @@ resource "azurerm_linux_web_app" "app" {
   }
 
   app_settings = {
-    "WEBSITE_NODE_DEFAULT_VERSION" = "18-lts"
     "SCM_DO_BUILD_DURING_DEPLOYMENT" = "false"
+    "WEBSITE_NODE_DEFAULT_VERSION"   = "18-lts"
   }
+
+  startup_command = "bash startup.sh"
 }
 
 # Certificado SSL gerenciado gratuito (quando adicionar domínio customizado)

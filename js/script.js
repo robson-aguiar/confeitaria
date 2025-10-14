@@ -406,8 +406,7 @@ document.addEventListener('keydown', (e) => {
 // Configurador de Bolo
 const cakeConfig = {
     massa: '',
-    tipoRecheio: '',
-    recheio: '',
+    recheios: [],
     tipoCobertura: '',
     coresCobertura: [],
     peso: 0,
@@ -479,19 +478,25 @@ function openCakeBuilder() {
             </div>
             
             <div class="builder-step">
-                <h3>2. Escolha o Tipo de Recheio 🍫</h3>
+                <h3>2. Escolha os Recheios 🍫 (até 2)</h3>
+                <p style="font-size: 14px; color: #666; margin-bottom: 15px;">💡 Você pode escolher 1 ou 2 recheios. Se escolher 2, o preço será a média dos dois</p>
+                
+                <h4 style="margin-top: 20px;">Tradicional (R$ 80/kg)</h4>
                 <div class="options-grid">
-                    <button class="option-btn" onclick="selectTipoRecheio('tradicional')">Tradicional<br><small>R$ 80/kg</small></button>
-                    <button class="option-btn" onclick="selectTipoRecheio('premium')">Premium ⭐<br><small>R$ 90/kg</small></button>
-                    <button class="option-btn" onclick="selectTipoRecheio('especial')">Especial ✨<br><small>R$ 100/kg</small></button>
+                    ${recheios.tradicional.map(r => `<button class="option-btn" onclick="selectRecheio('${r}', 'tradicional')">${r}</button>`).join('')}
                 </div>
-                <p class="selected">Selecionado: <span id="selected-tipo-recheio">Nenhum</span></p>
-            </div>
-            
-            <div class="builder-step" id="recheio-sabor-step" style="display: none;">
-                <h3>3. Escolha o Sabor do Recheio 🍰</h3>
-                <div id="recheio-options" class="options-grid"></div>
-                <p class="selected">Selecionado: <span id="selected-recheio">Nenhum</span></p>
+                
+                <h4 style="margin-top: 20px;">Premium ⭐ (R$ 90/kg)</h4>
+                <div class="options-grid">
+                    ${recheios.premium.map(r => `<button class="option-btn" onclick="selectRecheio('${r}', 'premium')">${r}</button>`).join('')}
+                </div>
+                
+                <h4 style="margin-top: 20px;">Especial ✨ (R$ 100/kg)</h4>
+                <div class="options-grid">
+                    ${recheios.especial.map(r => `<button class="option-btn" onclick="selectRecheio('${r}', 'especial')">${r}</button>`).join('')}
+                </div>
+                
+                <p class="selected" style="margin-top: 20px;">Selecionados (<span id="recheio-count">0</span>/2): <span id="selected-recheios">Nenhum</span></p>
             </div>
             
             <div class="builder-step">
@@ -562,47 +567,33 @@ function selectMassa(massa) {
     updateSummary();
 }
 
-function selectTipoRecheio(tipo) {
-    cakeConfig.tipoRecheio = tipo;
-    cakeConfig.recheio = '';
+function selectRecheio(sabor, tipo) {
+    const index = cakeConfig.recheios.findIndex(r => r.sabor === sabor);
     
-    const tipoNomes = {
-        'tradicional': 'Tradicional',
-        'premium': 'Premium ⭐',
-        'especial': 'Especial ✨'
-    };
+    if (index > -1) {
+        cakeConfig.recheios.splice(index, 1);
+    } else {
+        if (cakeConfig.recheios.length >= 2) {
+            alert('⚠️ Você pode escolher no máximo 2 recheios!');
+            return;
+        }
+        cakeConfig.recheios.push({ sabor, tipo });
+    }
     
-    document.getElementById('selected-tipo-recheio').textContent = tipoNomes[tipo];
     document.querySelectorAll('.builder-step:nth-child(2) .option-btn').forEach(btn => {
-        btn.classList.remove('selected');
-    });
-    document.querySelector(`.builder-step:nth-child(2) .option-btn[onclick="selectTipoRecheio('${tipo}')"]`).classList.add('selected');
-    
-    const recheioStep = document.getElementById('recheio-sabor-step');
-    const recheioOptions = document.getElementById('recheio-options');
-    
-    recheioStep.style.display = 'block';
-    recheioOptions.innerHTML = '';
-    
-    recheios[tipo].forEach(r => {
-        const btn = document.createElement('button');
-        btn.className = 'option-btn';
-        btn.textContent = r;
-        btn.addEventListener('click', () => selectRecheio(r));
-        recheioOptions.appendChild(btn);
+        const isSelected = cakeConfig.recheios.some(r => r.sabor === btn.textContent);
+        if (isSelected) {
+            btn.classList.add('selected');
+        } else {
+            btn.classList.remove('selected');
+        }
     });
     
-    document.getElementById('selected-recheio').textContent = 'Nenhum';
-    updateSummary();
-}
-
-function selectRecheio(recheio) {
-    cakeConfig.recheio = recheio;
-    document.getElementById('selected-recheio').textContent = recheio;
-    document.querySelectorAll('#recheio-options .option-btn').forEach(btn => {
-        btn.classList.remove('selected');
-        if (btn.textContent === recheio) btn.classList.add('selected');
-    });
+    document.getElementById('recheio-count').textContent = cakeConfig.recheios.length;
+    document.getElementById('selected-recheios').textContent = cakeConfig.recheios.length > 0 
+        ? cakeConfig.recheios.map(r => r.sabor).join(' + ') 
+        : 'Nenhum';
+    
     updateSummary();
 }
 
@@ -669,14 +660,14 @@ function updateCakeWeight() {
         cakeConfig.peso = weight;
     }
     
-    if (cakeConfig.tipoRecheio) {
+    if (cakeConfig.recheios.length > 0) {
         const precosPorKg = {
             'tradicional': 80,
             'premium': 90,
             'especial': 100
         };
-        const pricePerKg = precosPorKg[cakeConfig.tipoRecheio];
-        const price = (cakeConfig.peso * pricePerKg).toFixed(2);
+        const avgPrice = cakeConfig.recheios.reduce((sum, r) => sum + precosPorKg[r.tipo], 0) / cakeConfig.recheios.length;
+        const price = (cakeConfig.peso * avgPrice).toFixed(2);
         document.getElementById('selected-weight').textContent = cakeConfig.peso > 0 ? `${cakeConfig.peso} kg` : 'Não definido';
         document.getElementById('selected-price').textContent = cakeConfig.peso > 0 ? `R$ ${price}` : 'R$ 0,00';
     } else {
@@ -722,15 +713,16 @@ function updateSummary() {
     
     let html = '<ul style="text-align: left;">';
     if (cakeConfig.massa) html += `<li><strong>Massa:</strong> ${cakeConfig.massa}</li>`;
-    if (cakeConfig.tipoRecheio) html += `<li><strong>Tipo de Recheio:</strong> ${tipoNomes[cakeConfig.tipoRecheio]}</li>`;
-    if (cakeConfig.recheio) html += `<li><strong>Sabor do Recheio:</strong> ${cakeConfig.recheio}</li>`;
+    if (cakeConfig.recheios.length > 0) {
+        html += `<li><strong>Recheios:</strong> ${cakeConfig.recheios.map(r => `${r.sabor} (${tipoNomes[r.tipo]})`).join(' + ')}</li>`;
+    }
     if (cakeConfig.tipoCobertura) html += `<li><strong>Cobertura:</strong> ${cakeConfig.tipoCobertura}</li>`;
     if (cakeConfig.coresCobertura.length > 0) html += `<li><strong>Cores da Cobertura:</strong> ${cakeConfig.coresCobertura.join(', ')}</li>`;
-    if (cakeConfig.peso > 0 && cakeConfig.tipoRecheio) {
-        const pricePerKg = precosPorKg[cakeConfig.tipoRecheio];
-        const totalPrice = cakeConfig.peso * pricePerKg;
+    if (cakeConfig.peso > 0 && cakeConfig.recheios.length > 0) {
+        const avgPrice = cakeConfig.recheios.reduce((sum, r) => sum + precosPorKg[r.tipo], 0) / cakeConfig.recheios.length;
+        const totalPrice = cakeConfig.peso * avgPrice;
         html += `<li><strong>Peso:</strong> ${cakeConfig.peso} kg</li>`;
-        html += `<li><strong>Preço/kg:</strong> R$ ${pricePerKg},00</li>`;
+        html += `<li><strong>Preço/kg:</strong> R$ ${avgPrice.toFixed(2)} (média dos recheios)</li>`;
         html += `<li><strong>Preço Total:</strong> R$ ${totalPrice.toFixed(2)}</li>`;
     }
 
@@ -738,7 +730,7 @@ function updateSummary() {
     
     summary.innerHTML = html;
     
-    const isComplete = cakeConfig.massa && cakeConfig.recheio && cakeConfig.tipoCobertura && cakeConfig.coresCobertura.length > 0 && cakeConfig.peso >= 1;
+    const isComplete = cakeConfig.massa && cakeConfig.recheios.length > 0 && cakeConfig.tipoCobertura && cakeConfig.coresCobertura.length > 0 && cakeConfig.peso >= 1;
     document.getElementById('send-order-btn').disabled = !isComplete;
 }
 
@@ -758,15 +750,17 @@ function sendCakeOrder() {
         'especial': 100
     };
     
-    const pricePerKg = precosPorKg[cakeConfig.tipoRecheio];
-    const totalPrice = cakeConfig.peso * pricePerKg;
+    const avgPrice = cakeConfig.recheios.reduce((sum, r) => sum + precosPorKg[r.tipo], 0) / cakeConfig.recheios.length;
+    const totalPrice = cakeConfig.peso * avgPrice;
     const price = totalPrice.toFixed(2);
     
-    let detalhes = `<p style="margin: 5px 0; font-size: 14px; color: #666;">🍰 ${cakeConfig.massa} | 🍫 ${cakeConfig.recheio} (${tipoNomes[cakeConfig.tipoRecheio]}) | 🎂 ${cakeConfig.tipoCobertura} | ⚖️ ${cakeConfig.peso}kg | 💰 R$ ${price}</p>`;
+    const recheiosText = cakeConfig.recheios.map(r => `${r.sabor} (${tipoNomes[r.tipo]})`).join(' + ');
+    
+    let detalhes = `<p style="margin: 5px 0; font-size: 14px; color: #666;">🍰 ${cakeConfig.massa} | 🍫 ${recheiosText} | 🎂 ${cakeConfig.tipoCobertura} | ⚖️ ${cakeConfig.peso}kg | 💰 R$ ${price}</p>`;
     
     let mensagem = `🍰 Massa: ${cakeConfig.massa}\n`;
-    mensagem += `📦 Tipo de Recheio: ${tipoNomes[cakeConfig.tipoRecheio]} (R$ ${pricePerKg}/kg)\n`;
-    mensagem += `🍫 Sabor do Recheio: ${cakeConfig.recheio}\n`;
+    mensagem += `🍫 Recheios: ${recheiosText}\n`;
+    mensagem += `💰 Preço/kg: R$ ${avgPrice.toFixed(2)} (média dos recheios)\n`;
     mensagem += `🎂 Cobertura: ${cakeConfig.tipoCobertura}\n`;
     mensagem += `🌈 Cores: ${cakeConfig.coresCobertura.join(', ')}\n`;
     mensagem += `⚖️ Peso: ${cakeConfig.peso} kg\n`;

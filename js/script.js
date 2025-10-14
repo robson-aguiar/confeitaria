@@ -368,16 +368,13 @@ const cakeConfig = {
 };
 
 const massas = [
-    'Tradicional baunilha', 'Coco', 'Leite Ninho', 'Churros', 'Brigadeiro',
-    'Brigadeiro branco', '4 Leites', 'Doce de Leite', 'Paçoca', 'Beijinho',
-    'Ameixa', 'Pêssego', 'Abacaxi com coco', 'Morango', 'Red Velvet', 'Chocolate', 'Café'
+    'Tradicional baunilha', 'Coco', 'Leite Ninho', 'Churros',
+    'Red Velvet', 'Chocolate', 'Café'
 ];
 
 const recheios = {
     tradicional: [
-        'Brigadeiro', 'Brigadeiro branco', '4 Leites', 'Doce de leite',
-        'Paçoca', 'Coco', 'Beijinho', 'Ameixa', 'Pêssego',
-        'Abacaxi com coco', 'Morango'
+        'Coco'
     ],
     premium: [
         'Leite ninho trufado', 'Trufado de chocolate ao leite',

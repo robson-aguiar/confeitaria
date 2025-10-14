@@ -878,6 +878,22 @@ function openCakeCalculator() {
     document.body.style.overflow = 'hidden';
 }
 
+// FAQ Toggle
+function toggleFAQ(button) {
+    const faqItem = button.parentElement;
+    const isActive = faqItem.classList.contains('active');
+    
+    // Fechar todos os outros FAQs
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Abrir o clicado se não estava ativo
+    if (!isActive) {
+        faqItem.classList.add('active');
+    }
+}
+
 function calculateCake() {
     const adults = parseInt(document.getElementById('calc-adults').value) || 0;
     const children = parseInt(document.getElementById('calc-children').value) || 0;

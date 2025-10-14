@@ -9,6 +9,23 @@
     --white: #ffffff;
     --gray: #86868b;
     --light-gray: #f5f5f7;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f7;
+    --text-primary: #000000;
+    --text-secondary: #86868b;
+    --border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --black: #ffffff;
+    --white: #1a1a1a;
+    --gray: #a0a0a0;
+    --light-gray: #2a2a2a;
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2a2a2a;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --border-color: rgba(255, 255, 255, 0.1);
 }
 
 html {
@@ -17,9 +34,10 @@ html {
 
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    color: var(--black);
-    background: var(--white);
+    color: var(--text-primary);
+    background: var(--bg-primary);
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Navbar Minimalista */
@@ -65,6 +83,24 @@ body {
 }
 
 .nav-menu a:hover {
+    opacity: 0.6;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    color: var(--text-primary);
+    transition: opacity 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+}
+
+.theme-toggle:hover {
     opacity: 0.6;
 }
 
@@ -176,11 +212,11 @@ body {
     display: flex;
     align-items: center;
     padding: 4rem 2rem;
-    background: var(--white);
+    background: var(--bg-primary);
 }
 
 .product-section.dark {
-    background: var(--light-gray);
+    background: var(--bg-secondary);
 }
 
 .product-content {
@@ -221,8 +257,8 @@ body {
 .product-cta {
     display: inline-block;
     padding: 1rem 2.5rem;
-    background: var(--black);
-    color: var(--white);
+    background: var(--text-primary);
+    color: var(--bg-primary);
     text-decoration: none;
     border-radius: 50px;
     font-weight: 500;
@@ -250,7 +286,7 @@ body {
 /* Gallery */
 .gallery-section {
     padding: 6rem 2rem;
-    background: var(--white);
+    background: var(--bg-primary);
 }
 
 .gallery-filters {
@@ -521,17 +557,17 @@ body {
 
 /* Footer */
 .footer {
-    background: var(--light-gray);
+    background: var(--bg-secondary);
     padding: 2rem;
     text-align: center;
-    color: var(--gray);
+    color: var(--text-secondary);
     font-size: 0.875rem;
 }
 
 /* Testimonials */
 .testimonials-section {
     padding: 6rem 2rem;
-    background: var(--light-gray);
+    background: var(--bg-secondary);
 }
 
 .section-title {
@@ -551,11 +587,15 @@ body {
 }
 
 .testimonial-card {
-    background: var(--white);
+    background: var(--bg-primary);
     padding: 2rem;
     border-radius: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s;
+}
+
+[data-theme="dark"] .testimonial-card {
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05);
 }
 
 .testimonial-card:hover {
@@ -583,7 +623,7 @@ body {
 /* FAQ */
 .faq-section {
     padding: 6rem 2rem;
-    background: var(--white);
+    background: var(--bg-primary);
 }
 
 .faq-container {

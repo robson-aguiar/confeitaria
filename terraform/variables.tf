@@ -39,3 +39,9 @@ variable "tags" {
     Project     = "Confeitaria"
   }
 }
+
+variable "custom_domain" {
+  description = "Domínio customizado (deixe vazio para usar apenas azurewebsites.net)"
+  type        = string
+  default     = ""
+}

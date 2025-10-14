@@ -28,7 +28,7 @@ def optimize_images():
         image_files.extend(glob.glob(os.path.join(INPUT_DIR, ext)))
     
     total = len(image_files)
-    print(f"🖼️  Encontradas {total} imagens para otimizar\n")
+    print(f"Encontradas {total} imagens para otimizar\n")
     
     total_original = 0
     total_optimized = 0
@@ -72,30 +72,30 @@ def optimize_images():
             saved = original_size - optimized_size
             saved_percent = (saved / original_size) * 100
             
-            print(f"[{i}/{total}] ✅ {filename}")
+            print(f"[{i}/{total}] OK {filename}")
             print(f"    Original: {original_size/1024:.1f} KB → WebP: {optimized_size/1024:.1f} KB")
             print(f"    Economia: {saved/1024:.1f} KB ({saved_percent:.1f}%)\n")
             
         except Exception as e:
-            print(f"[{i}/{total}] ❌ Erro em {filename}: {e}\n")
+            print(f"[{i}/{total}] ERRO em {filename}: {e}\n")
     
     # Resumo final
     total_saved = total_original - total_optimized
     total_saved_percent = (total_saved / total_original) * 100 if total_original > 0 else 0
     
     print("=" * 60)
-    print("📊 RESUMO DA OTIMIZAÇÃO")
+    print("RESUMO DA OTIMIZACAO")
     print("=" * 60)
     print(f"Total original:   {total_original/1024/1024:.2f} MB")
     print(f"Total otimizado:  {total_optimized/1024/1024:.2f} MB")
     print(f"Economia total:   {total_saved/1024/1024:.2f} MB ({total_saved_percent:.1f}%)")
     print("=" * 60)
-    print(f"\n✨ Imagens otimizadas salvas em: {OUTPUT_DIR}")
-    print("\n📝 Próximos passos:")
+    print(f"\nImagens otimizadas salvas em: {OUTPUT_DIR}")
+    print("\nProximos passos:")
     print("1. Revise as imagens otimizadas")
     print("2. Substitua as originais pelas otimizadas")
     print("3. Atualize o HTML para usar .webp")
 
 if __name__ == "__main__":
-    print("🚀 Iniciando otimização de imagens...\n")
+    print("Iniciando otimizacao de imagens...\n")
     optimize_images()

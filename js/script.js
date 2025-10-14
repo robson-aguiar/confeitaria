@@ -169,17 +169,28 @@ document.querySelectorAll('.fade-in').forEach(el => {
     observer.observe(el);
 });
 
-// Animação suave nos itens da galeria
+// Lazy load galeria com Intersection Observer
+const galleryObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const img = entry.target.querySelector('img');
+            if (img && img.dataset.src) {
+                img.src = img.dataset.src;
+                img.removeAttribute('data-src');
+            }
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            galleryObserver.unobserve(entry.target);
+        }
+    });
+}, { rootMargin: '50px' });
+
 const galleryItems = document.querySelectorAll('.gallery-item');
-galleryItems.forEach((item, index) => {
+galleryItems.forEach(item => {
     item.style.opacity = '0';
     item.style.transform = 'translateY(30px)';
-    
-    setTimeout(() => {
-        item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-        item.style.opacity = '1';
-        item.style.transform = 'translateY(0)';
-    }, index * 100);
+    item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    galleryObserver.observe(item);
 });
 
 // Parallax suave nas imagens dos produtos

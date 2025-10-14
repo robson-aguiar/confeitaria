@@ -45,10 +45,7 @@ jobs:
           -backend-config="container_name=${{ secrets.TF_STATE_CONTAINER }}" \
           -backend-config="key=confeitaria.tfstate"
 
-    - name: Import Existing Resources
-      working-directory: ./terraform
-      run: |
-        terraform import azurerm_resource_group.rg /subscriptions/73cd6b32-c96a-40fb-9e13-9dc55db03a3a/resourceGroups/Confeitaria || true
+
 
     - name: Terraform Plan
       working-directory: ./terraform

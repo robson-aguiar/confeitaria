@@ -425,7 +425,7 @@ const recheios = {
     ]
 };
 
-const coberturas = ['Chantininho ⭐', 'Choconinho ⭐', 'Pequeno em Chantininho', 'Pequeno em Choconinho'];
+const coberturas = ['Chantininho ⭐', 'Choconinho ⭐'];
 
 
 

@@ -15,5 +15,5 @@ output "resource_group_name" {
 
 output "cdn_endpoint_url" {
   description = "URL do CDN Endpoint"
-  value       = "https://${azurerm_cdn_endpoint.cdn_endpoint.host_name}"
+  value       = "https://${azurerm_cdn_endpoint.cdn_endpoint.fqdn}"
 }

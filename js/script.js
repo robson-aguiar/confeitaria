@@ -600,7 +600,7 @@ function selectRecheio(sabor, tipo) {
 function selectTipoCobertura(tipo) {
     cakeConfig.tipoCobertura = tipo;
     document.getElementById('selected-tipo-cobertura').textContent = tipo;
-    document.querySelectorAll('.builder-step:nth-child(4) .option-btn').forEach(btn => {
+    document.querySelectorAll('.builder-step:nth-child(3) .option-btn').forEach(btn => {
         btn.classList.remove('selected');
         if (btn.textContent === tipo) btn.classList.add('selected');
     });
@@ -620,7 +620,7 @@ function selectCor(cor) {
     }
     
     document.getElementById('selected-cor').textContent = cakeConfig.coresCobertura.length > 0 ? cakeConfig.coresCobertura.join(', ') : 'Nenhum';
-    document.querySelectorAll('.builder-step:nth-child(5) .option-btn').forEach(btn => {
+    document.querySelectorAll('.builder-step:nth-child(4) .option-btn').forEach(btn => {
         if (cakeConfig.coresCobertura.includes(btn.textContent)) {
             btn.classList.add('selected');
         } else {
@@ -667,7 +667,9 @@ function updateCakeWeight() {
             'especial': 100
         };
         const avgPrice = cakeConfig.recheios.reduce((sum, r) => sum + precosPorKg[r.tipo], 0) / cakeConfig.recheios.length;
-        const price = (cakeConfig.peso * avgPrice).toFixed(2);
+        const totalPrice = cakeConfig.peso * avgPrice;
+        const price = totalPrice.toFixed(2);
+        console.log('DEBUG - Peso:', cakeConfig.peso, '| Preço médio/kg:', avgPrice, '| Total:', totalPrice);
         document.getElementById('selected-weight').textContent = cakeConfig.peso > 0 ? `${cakeConfig.peso} kg` : 'Não definido';
         document.getElementById('selected-price').textContent = cakeConfig.peso > 0 ? `R$ ${price}` : 'R$ 0,00';
     } else {
@@ -682,7 +684,7 @@ function selectTopper(hasTopper) {
     cakeConfig.topper = hasTopper;
     document.getElementById('selected-topper').textContent = hasTopper ? 'Sim' : 'Não';
     document.getElementById('topper-tema').style.display = hasTopper ? 'block' : 'none';
-    document.querySelectorAll('.builder-step:nth-child(7) .option-btn').forEach(btn => {
+    document.querySelectorAll('.builder-step:nth-child(6) .option-btn').forEach(btn => {
         btn.classList.remove('selected');
         if ((btn.textContent === 'Sim' && hasTopper) || (btn.textContent === 'Não' && !hasTopper)) {
             btn.classList.add('selected');

@@ -44,14 +44,14 @@ resource "azurerm_linux_web_app" "app" {
     application_stack {
       node_version = "18-lts"
     }
+    
+    app_command_line = "npm start"
   }
 
   app_settings = {
-    "SCM_DO_BUILD_DURING_DEPLOYMENT" = "false"
+    "SCM_DO_BUILD_DURING_DEPLOYMENT" = "true"
     "WEBSITE_NODE_DEFAULT_VERSION"   = "18-lts"
   }
-
-  startup_command = "bash startup.sh"
 }
 
 # Certificado SSL gerenciado gratuito (quando adicionar domínio customizado)

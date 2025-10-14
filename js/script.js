@@ -411,20 +411,7 @@ const massas = [
 
 const recheios = {
     tradicional: [
-        'Brigadeiro branco',
-        'Brigadeiro coco',
-        'Brigadeiro de ninho',
-        'Brigadeiro tradicional',
-        'Brigadeiro de paçoca',
-        'Doce de leite tradicional',
-        'Doce de leite',
-        'Coco',
-        'Doce de leite com Ameixa',
-        'Doce de leite com pêssego',
-        'Doce de leite com morango',
-        'Abacaxi com coco',
-        '4 leite',
-        'Paçoca'
+        'Coco'
     ],
     premium: [
         'Leite ninho trufado', 'Trufado de chocolate ao leite',
@@ -773,9 +760,11 @@ function sendCakeOrder() {
 
 // Configurador de Bolo Caseirinho
 const bolosCaseirinhos = [
-    'Coco 🥥', 'Paçoca 🥜', 'Leite Ninho 🥛', 'Chocolate 🍫',
-    'Fubá com goiabada 🌽🍓', 'Milho 🌽', 'Limão 🍋', 'Laranja 🍊',
-    'Abacaxi 🍍', 'Café ☕', 'Capuccino ☕🍫'
+    'Brigadeiro branco', 'Brigadeiro coco', 'Brigadeiro de ninho',
+    'Brigadeiro tradicional', 'Brigadeiro de paçoca', 'Doce de leite tradicional',
+    'Doce de leite', 'Coco', 'Doce de leite com Ameixa',
+    'Doce de leite com pêssego', 'Doce de leite com morango', 'Abacaxi com coco',
+    '4 leite', 'Paçoca'
 ];
 
 const coberturasCaseirinhos = [

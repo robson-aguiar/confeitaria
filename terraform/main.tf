@@ -39,6 +39,7 @@ resource "azurerm_linux_web_app" "app" {
     always_on        = var.always_on
     http2_enabled    = true
     ftps_state       = "Disabled"
+    minimum_tls_version = "1.2"
     
     application_stack {
       node_version = "18-lts"
@@ -49,4 +50,24 @@ resource "azurerm_linux_web_app" "app" {
     "WEBSITE_NODE_DEFAULT_VERSION" = "18-lts"
     "SCM_DO_BUILD_DURING_DEPLOYMENT" = "false"
   }
+}
+
+# Certificado SSL gerenciado gratuito (quando adicionar domínio customizado)
+resource "azurerm_app_service_managed_certificate" "cert" {
+  count                      = var.custom_domain != "" ? 1 : 0
+  custom_hostname_binding_id = azurerm_app_service_custom_hostname_binding.custom[0].id
+}
+
+resource "azurerm_app_service_custom_hostname_binding" "custom" {
+  count               = var.custom_domain != "" ? 1 : 0
+  hostname            = var.custom_domain
+  app_service_name    = azurerm_linux_web_app.app.name
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_app_service_certificate_binding" "cert_binding" {
+  count               = var.custom_domain != "" ? 1 : 0
+  hostname_binding_id = azurerm_app_service_custom_hostname_binding.custom[0].id
+  certificate_id      = azurerm_app_service_managed_certificate.cert[0].id
+  ssl_state           = "SniEnabled"
 }

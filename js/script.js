@@ -406,7 +406,7 @@ const cakeConfig = {
 
 const massas = [
     'Tradicional baunilha', 'Coco', 'Leite Ninho', 'Churros',
-    'Red Velvet', 'Chocolate'
+    'Red Velvet', 'Chocolate', 'Café'
 ];
 
 const recheios = {

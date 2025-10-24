@@ -1073,3 +1073,232 @@ function calculateCake() {
         </div>
     `;
 }
+// Funções da Calculadora Avançada
+function updateCalculator() {
+    const tipo = document.querySelector('input[name="tipo"]:checked').value;
+    const adultos = parseInt(document.getElementById('calc-adults').value) || 0;
+    const criancas = parseInt(document.getElementById('calc-children').value) || 0;
+    
+    // Mostrar/ocultar configurações
+    document.getElementById('decorado-config').style.display = tipo === 'bolosDecorados' ? 'block' : 'none';
+    document.getElementById('caseirinho-config').style.display = tipo === 'bolosCaseirinhos' ? 'block' : 'none';
+    
+    // Obter recomendações de peso
+    const recommendations = window.priceCalculator.getRecommendations({adultos, criancas});
+    
+    // Configurar calculadora
+    const config = {
+        tipo,
+        peso: recommendations.recomendado.peso,
+        quantidade: 1,
+        descontos: []
+    };
+    
+    if (tipo === 'bolosDecorados') {
+        config.massa = document.getElementById('calc-massa').value;
+        config.recheio = document.getElementById('calc-recheio').value;
+        config.decoracao = document.getElementById('calc-decoracao').value;
+        config.cobertura = 'chantilly';
+    } else {
+        config.sabor = document.getElementById('calc-sabor').value;
+        config.cobertura = 'chocolate';
+    }
+    
+    // Calcular preços
+    const pricing = window.priceCalculator.calculatePrice(config);
+    
+    // Atualizar interface
+    updateRecommendations(recommendations, adultos + criancas);
+    updatePricing(pricing, config);
+}
+
+function updateRecommendations(recommendations, totalPessoas) {
+    const container = document.getElementById('calc-recommendations');
+    container.innerHTML = `
+        <h4>📏 Tamanhos Recomendados (${totalPessoas} pessoas)</h4>
+        <div class="size-options">
+            <div class="size-option" onclick="selectSize(${recommendations.minimo.peso})">
+                <strong>${recommendations.minimo.peso.toFixed(1)}kg</strong>
+                <span>${recommendations.minimo.descricao}</span>
+                <small>${recommendations.minimo.situacao}</small>
+            </div>
+            <div class="size-option active" onclick="selectSize(${recommendations.recomendado.peso})">
+                <strong>${recommendations.recomendado.peso.toFixed(1)}kg</strong>
+                <span>${recommendations.recomendado.descricao}</span>
+                <small>${recommendations.recomendado.situacao}</small>
+            </div>
+            <div class="size-option" onclick="selectSize(${recommendations.generoso.peso})">
+                <strong>${recommendations.generoso.peso.toFixed(1)}kg</strong>
+                <span>${recommendations.generoso.descricao}</span>
+                <small>${recommendations.generoso.situacao}</small>
+            </div>
+        </div>
+    `;
+}
+
+function updatePricing(pricing, config) {
+    const container = document.getElementById('calc-pricing');
+    const hasDiscount = pricing.discountAmount > 0;
+    
+    container.innerHTML = `
+        <div class="pricing-summary">
+            <div class="price-line">
+                <span>Preço base:</span>
+                <span>R$ ${pricing.pricePerKg.toFixed(2)}/kg</span>
+            </div>
+            <div class="price-line">
+                <span>Peso:</span>
+                <span>${config.peso.toFixed(1)}kg</span>
+            </div>
+            ${hasDiscount ? `
+                <div class="price-line">
+                    <span>Subtotal:</span>
+                    <span>R$ ${pricing.totalPrice.toFixed(2)}</span>
+                </div>
+                <div class="price-line discount">
+                    <span>Desconto (${pricing.totalDiscount.toFixed(0)}%):</span>
+                    <span>-R$ ${pricing.discountAmount.toFixed(2)}</span>
+                </div>
+            ` : ''}
+            <div class="price-total">
+                <span>Total:</span>
+                <span>R$ ${pricing.finalPrice.toFixed(2)}</span>
+            </div>
+        </div>
+        ${hasDiscount ? '<p class="discount-info">🎉 Desconto aplicado automaticamente!</p>' : ''}
+    `;
+}
+
+function selectSize(peso) {
+    // Atualizar peso selecionado
+    window.priceCalculator.currentConfig.peso = peso;
+    
+    // Remover classe active de todas as opções
+    document.querySelectorAll('.size-option').forEach(el => el.classList.remove('active'));
+    
+    // Adicionar classe active na opção clicada
+    event.target.closest('.size-option').classList.add('active');
+    
+    // Recalcular preços
+    updateCalculator();
+}
+
+function requestQuote() {
+    const customerInfo = {
+        nome: '',
+        telefone: '',
+        email: '',
+        evento: '',
+        dataEvento: ''
+    };
+    
+    const quote = window.priceCalculator.generateQuote(window.priceCalculator.currentConfig, customerInfo);
+    
+    // Abrir modal de orçamento
+    openQuoteModal(quote);
+}
+
+function openQuoteModal(quote) {
+    const modal = document.getElementById('productModal');
+    const content = document.getElementById('modalContent');
+    
+    content.innerHTML = `
+        <h2 class="modal-title">📋 Solicitar Orçamento</h2>
+        <p class="modal-description">Preencha seus dados para receber o orçamento detalhado</p>
+        
+        <form class="quote-form" onsubmit="sendQuote(event)">
+            <div class="form-group">
+                <label>Nome completo *</label>
+                <input type="text" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label>WhatsApp *</label>
+                <input type="tel" name="telefone" required placeholder="(19) 99999-9999">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="seu@email.com">
+            </div>
+            <div class="form-group">
+                <label>Tipo de evento</label>
+                <select name="evento">
+                    <option value="">Selecione...</option>
+                    <option value="aniversario">Aniversário</option>
+                    <option value="casamento">Casamento</option>
+                    <option value="formatura">Formatura</option>
+                    <option value="batizado">Batizado</option>
+                    <option value="corporativo">Evento Corporativo</option>
+                    <option value="outro">Outro</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Data do evento</label>
+                <input type="date" name="dataEvento">
+            </div>
+            
+            <div class="quote-summary">
+                <h4>Resumo do Pedido</h4>
+                <p><strong>Tipo:</strong> ${quote.config.tipo === 'bolosDecorados' ? 'Bolo Decorado' : 'Bolo Caseirinho'}</p>
+                <p><strong>Peso:</strong> ${quote.config.peso.toFixed(1)}kg</p>
+                <p><strong>Valor:</strong> R$ ${quote.pricing.finalPrice.toFixed(2)}</p>
+            </div>
+            
+            <button type="submit" class="quote-cta">
+                📱 Enviar via WhatsApp
+            </button>
+        </form>
+    `;
+}
+
+function sendQuote(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+    
+    if (!data.nome || !data.telefone) {
+        alert('Por favor, preencha nome e telefone.');
+        return;
+    }
+    
+    const config = window.priceCalculator.currentConfig;
+    const pricing = window.priceCalculator.calculatePrice(config);
+    
+    let message = `🎂 *ORÇAMENTO - VERA LÚCIA CONFEITARIA*\n\n`;
+    message += `👤 *Cliente:* ${data.nome}\n`;
+    message += `📱 *WhatsApp:* ${data.telefone}\n`;
+    if (data.email) message += `📧 *Email:* ${data.email}\n`;
+    if (data.evento) message += `🎉 *Evento:* ${data.evento}\n`;
+    if (data.dataEvento) message += `📅 *Data:* ${new Date(data.dataEvento).toLocaleDateString('pt-BR')}\n`;
+    
+    message += `\n🎂 *DETALHES DO BOLO*\n`;
+    message += `• Tipo: ${config.tipo === 'bolosDecorados' ? 'Bolo Decorado' : 'Bolo Caseirinho'}\n`;
+    message += `• Peso: ${config.peso.toFixed(1)}kg\n`;
+    
+    if (config.tipo === 'bolosDecorados') {
+        message += `• Massa: ${config.massa}\n`;
+        message += `• Recheio: ${config.recheio}\n`;
+        message += `• Decoração: ${config.decoracao}\n`;
+    } else {
+        message += `• Sabor: ${config.sabor}\n`;
+    }
+    
+    message += `\n💰 *VALORES*\n`;
+    message += `• Preço base: R$ ${pricing.pricePerKg.toFixed(2)}/kg\n`;
+    if (pricing.discountAmount > 0) {
+        message += `• Subtotal: R$ ${pricing.totalPrice.toFixed(2)}\n`;
+        message += `• Desconto: -R$ ${pricing.discountAmount.toFixed(2)}\n`;
+    }
+    message += `• *Total: R$ ${pricing.finalPrice.toFixed(2)}*\n`;
+    
+    message += `\n📋 *CONDIÇÕES*\n`;
+    message += `• Orçamento válido por 7 dias\n`;
+    message += `• Pagamento: 50% entrada + 50% entrega\n`;
+    message += `• Prazo: 3-5 dias úteis\n`;
+    message += `• Entrega gratuita em Campinas (pedidos R$ 150+)\n`;
+    
+    const whatsappUrl = `https://api.whatsapp.com/send/?phone=5519971307912&text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+    
+    closeProductModal();
+}

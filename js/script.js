@@ -50,6 +50,21 @@ function openCart() {
         content.innerHTML = `
             <h2 class="modal-title">Meu Carrinho (${cart.length} ${cart.length === 1 ? 'item' : 'itens'})</h2>
             <div style="margin: 30px 0;">${itemsHTML}</div>
+            <div style="margin: 20px 0;">
+                <label style="display: block; margin-bottom: 10px; font-weight: 500;">👤 Nome completo: *</label>
+                <input type="text" id="cart-name" placeholder="Seu nome completo" required
+                       style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;">
+            </div>
+            <div style="margin: 20px 0;">
+                <label style="display: block; margin-bottom: 10px; font-weight: 500;">📍 Endereço completo: *</label>
+                <textarea id="cart-address" placeholder="Rua, número, bairro, cidade..." required
+                          style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; min-height: 80px; font-family: inherit; resize: vertical;"></textarea>
+            </div>
+            <div style="margin: 20px 0;">
+                <label style="display: block; margin-bottom: 10px; font-weight: 500;">📝 Observações adicionais (opcional):</label>
+                <textarea id="cart-observations" placeholder="Ex: Data de entrega, horário, detalhes especiais..." 
+                          style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; min-height: 80px; font-family: inherit; resize: vertical;"></textarea>
+            </div>
             <button class="modal-cta" onclick="sendCartOrder()">
                 Enviar Pedido Completo pelo WhatsApp
             </button>
@@ -64,13 +79,45 @@ function openCart() {
 }
 
 function sendCartOrder() {
+    const name = document.getElementById('cart-name');
+    const address = document.getElementById('cart-address');
+    
+    if (!name || !name.value.trim()) {
+        alert('⚠️ Por favor, informe seu nome completo.');
+        if (name) name.focus();
+        return;
+    }
+    
+    if (!address || !address.value.trim()) {
+        alert('⚠️ Por favor, informe seu endereço completo.');
+        if (address) address.focus();
+        return;
+    }
+    
     let message = '🛒 *Pedido Completo*\n\n';
+    message += `👤 *Nome:* ${name.value.trim()}\n`;
+    message += `📍 *Endereço:* ${address.value.trim()}\n\n`;
+    message += '*--- ITENS DO PEDIDO ---*\n\n';
+    
+    let totalValue = 0;
     
     cart.forEach((item, index) => {
         message += `*${index + 1}. ${item.tipo}*\n${item.mensagem}\n\n`;
+        if (item.price) {
+            totalValue += parseFloat(item.price);
+        }
     });
     
     message += `📦 *Total de itens:* ${cart.length}`;
+    
+    if (totalValue > 0) {
+        message += `\n💰 *Valor Total:* R$ ${totalValue.toFixed(2)}`;
+    }
+    
+    const observations = document.getElementById('cart-observations');
+    if (observations && observations.value.trim()) {
+        message += `\n\n📝 *Observações:*\n${observations.value.trim()}`;
+    }
     
     const whatsappUrl = `https://api.whatsapp.com/send/?phone=5519971307912&text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
@@ -426,12 +473,8 @@ const recheios = {
         'Brigadeiro de ninho',
         'Brigadeiro tradicional',
         'Brigadeiro de paçoca',
-        'Doce de leite tradicional',
         'Doce de leite',
         'Coco',
-        'Doce de leite com Ameixa',
-        'Doce de leite com pêssego',
-        'Doce de leite com morango',
         'Abacaxi com coco',
         '4 leite',
         'Paçoca'
@@ -777,7 +820,8 @@ function sendCakeOrder() {
     addToCart({
         tipo: 'Bolo Decorado',
         detalhes: detalhes,
-        mensagem: mensagem
+        mensagem: mensagem,
+        price: price
     });
 }
 
@@ -878,7 +922,8 @@ function sendSimpleCakeOrder() {
     addToCart({
         tipo: 'Bolo Caseirinho',
         detalhes: detalhes,
-        mensagem: mensagem
+        mensagem: mensagem,
+        price: '30.00'
     });
 }
 

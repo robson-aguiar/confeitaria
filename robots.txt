@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://app-veralucia-confeitaria.azurewebsites.net/sitemap.xml
+
+# Otimizações para SEO
+Allow: /css/
+Allow: /js/
+Allow: /images/
+Allow: /favicon.svg
+Allow: /favicon.ico
+
+# Bloquear arquivos desnecessários
+Disallow: /terraform/
+Disallow: /*.py$
+Disallow: /*.md$
+Disallow: /web.config
+Disallow: /.git/
+Disallow: /node_modules/
+
+# Crawl-delay para não sobrecarregar
+Crawl-delay: 1

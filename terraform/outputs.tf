@@ -13,4 +13,14 @@ output "resource_group_name" {
   value       = azurerm_resource_group.rg.name
 }
 
+output "cdn_endpoint_url" {
+  description = "URL do CDN Endpoint"
+  value       = "https://${azurerm_cdn_endpoint.cdn_endpoint.fqdn}"
+}
+
+output "cdn_profile_name" {
+  description = "Nome do CDN Profile"
+  value       = azurerm_cdn_profile.cdn.name
+}
+
 

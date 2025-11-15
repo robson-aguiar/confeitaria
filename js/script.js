@@ -15,6 +15,16 @@ function updateCartBadge() {
 function addToCart(item) {
     cart.push(item);
     updateCartBadge();
+    
+    // Analytics tracking
+    if (window.analytics) {
+        analytics.trackAddToCart({
+            name: item.tipo,
+            category: item.categoria || 'bolo',
+            price: item.preco || 0
+        });
+    }
+    
     alert('✅ Item adicionado ao carrinho!');
     closeProductModal();
 }
@@ -92,6 +102,13 @@ function sendCartOrder() {
         alert('⚠️ Por favor, informe seu endereço completo.');
         if (address) address.focus();
         return;
+    }
+    
+    // Analytics tracking
+    if (window.analytics) {
+        const totalValue = cart.reduce((sum, item) => sum + (item.preco || 80), 0);
+        analytics.trackBeginCheckout(totalValue, cart);
+        analytics.trackWhatsAppClick('cart_order');
     }
     
     let message = '🛒 *Pedido Completo*\n\n';
@@ -1301,4 +1318,110 @@ function sendQuote(event) {
     window.open(whatsappUrl, '_blank');
     
     closeProductModal();
+}
+// Inicializar Reviews quando a página carregar
+document.addEventListener('DOMContentLoaded', () => {
+    // Inserir seção de reviews
+    const placeholder = document.getElementById('reviews-section-placeholder');
+    if (placeholder && window.reviewsSystem) {
+        placeholder.innerHTML = reviewsSystem.renderReviewsSection();
+    }
+    
+    // Inicializar filtros da galeria
+    if (document.querySelector('.gallery-section') && window.galleryFilters) {
+        galleryFilters.init();
+    }
+});
+// Menu Mobile
+function toggleMenu() {
+    const menu = document.getElementById('nav-menu');
+    const hamburger = document.getElementById('hamburger');
+    
+    menu.classList.toggle('active');
+    hamburger.classList.toggle('active');
+    
+    // Prevenir scroll quando menu aberto
+    if (menu.classList.contains('active')) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+}
+
+function closeMenu() {
+    const menu = document.getElementById('nav-menu');
+    const hamburger = document.getElementById('hamburger');
+    
+    menu.classList.remove('active');
+    hamburger.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Fechar menu ao clicar fora
+document.addEventListener('click', (e) => {
+    const menu = document.getElementById('nav-menu');
+    const hamburger = document.getElementById('hamburger');
+    
+    if (menu.classList.contains('active') && 
+        !menu.contains(e.target) && 
+        !hamburger.contains(e.target)) {
+        closeMenu();
+    }
+});
+
+// Fechar menu ao redimensionar tela
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+        closeMenu();
+    }
+});
+// PWA Service Worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+                console.log('SW registered: ', registration);
+            })
+            .catch((registrationError) => {
+                console.log('SW registration failed: ', registrationError);
+            });
+    });
+}
+
+// PWA Install Prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    showInstallButton();
+});
+
+function showInstallButton() {
+    // Criar botão de instalação se não existir
+    if (!document.getElementById('install-btn')) {
+        const installBtn = document.createElement('button');
+        installBtn.id = 'install-btn';
+        installBtn.innerHTML = '📱 Instalar App';
+        installBtn.className = 'install-btn';
+        installBtn.onclick = installPWA;
+        
+        // Adicionar ao hero ou floating buttons
+        const hero = document.querySelector('.hero-content');
+        if (hero) {
+            hero.appendChild(installBtn);
+        }
+    }
+}
+
+function installPWA() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+                document.getElementById('install-btn').style.display = 'none';
+            }
+            deferredPrompt = null;
+        });
+    }
 }

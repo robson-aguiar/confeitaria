@@ -1027,6 +1027,167 @@ function filterGallery(category) {
     });
 }
 
+// Adicionar funcionalidade de orçamento similar às imagens da galeria
+function addGalleryClickHandlers() {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    
+    galleryItems.forEach(item => {
+        const img = item.querySelector('img');
+        if (img) {
+            // Adicionar overlay com botão de orçamento
+            const overlay = document.createElement('div');
+            overlay.className = 'gallery-overlay';
+            overlay.innerHTML = `
+                <button class="gallery-quote-btn" onclick="requestSimilarQuote('${img.src}', '${img.alt}')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14,2 14,8 20,8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10,9 9,9 8,9"/>
+                    </svg>
+                    Orçamento Similar
+                </button>
+            `;
+            
+            item.appendChild(overlay);
+        }
+    });
+}
+
+// Solicitar orçamento similar baseado na imagem selecionada
+function requestSimilarQuote(imageSrc, imageAlt) {
+    // Armazenar imagem selecionada
+    window.selectedGalleryImage = {
+        src: imageSrc,
+        alt: imageAlt
+    };
+    
+    // Abrir modal de orçamento similar
+    openSimilarQuoteModal(imageSrc, imageAlt);
+}
+
+// Abrir modal de orçamento similar
+function openSimilarQuoteModal(imageSrc, imageAlt) {
+    const modal = document.getElementById('productModal');
+    const content = document.getElementById('modalContent');
+    
+    content.innerHTML = `
+        <h2 class="modal-title">📋 Orçamento Similar</h2>
+        <p class="modal-description">Solicite um orçamento para um bolo similar a esta imagem</p>
+        
+        <div class="selected-image-preview">
+            <img src="${imageSrc}" alt="${imageAlt}" style="max-width: 300px; border-radius: 8px; margin: 20px 0;">
+            <p style="font-size: 14px; color: #666; margin-bottom: 20px;">Imagem selecionada: ${imageAlt}</p>
+        </div>
+        
+        <form class="quote-form" onsubmit="sendSimilarQuote(event)">
+            <div class="form-group">
+                <label>Nome completo *</label>
+                <input type="text" name="nome" required>
+            </div>
+            
+            <div class="form-group">
+                <label>WhatsApp *</label>
+                <input type="tel" name="telefone" required placeholder="(19) 99999-9999">
+            </div>
+            
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" name="email" placeholder="seu@email.com">
+            </div>
+            
+            <div class="form-group">
+                <label>Peso aproximado do bolo (kg) *</label>
+                <select name="peso" required>
+                    <option value="">Selecione o peso</option>
+                    <option value="1.0">1,0 kg (8-10 pessoas)</option>
+                    <option value="1.5">1,5 kg (12-15 pessoas)</option>
+                    <option value="2.0">2,0 kg (16-20 pessoas)</option>
+                    <option value="2.5">2,5 kg (20-25 pessoas)</option>
+                    <option value="3.0">3,0 kg (25-30 pessoas)</option>
+                    <option value="4.0">4,0 kg (35-40 pessoas)</option>
+                    <option value="5.0">5,0 kg (45-50 pessoas)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Tipo de evento</label>
+                <input type="text" name="evento" placeholder="Aniversário, casamento, etc.">
+            </div>
+            
+            <div class="form-group">
+                <label>Data do evento</label>
+                <input type="date" name="dataEvento">
+            </div>
+            
+            <div class="form-group">
+                <label>Observações</label>
+                <textarea name="observacoes" rows="3" placeholder="Detalhes específicos sobre o bolo desejado..."></textarea>
+            </div>
+            
+            <button type="submit" class="modal-cta">
+                📱 Enviar Orçamento via WhatsApp
+            </button>
+        </form>
+    `;
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Enviar orçamento similar
+function sendSimilarQuote(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+    
+    if (!data.nome || !data.telefone || !data.peso) {
+        alert('Por favor, preencha nome, telefone e peso do bolo.');
+        return;
+    }
+    
+    const selectedImage = window.selectedGalleryImage;
+    const peso = parseFloat(data.peso);
+    const precoEstimado = peso * 85; // Preço médio estimado
+    
+    let message = `🎂 *ORÇAMENTO SIMILAR - VERA LÚCIA CONFEITARIA*\n\n`;
+    message += `👤 *Cliente:* ${data.nome}\n`;
+    message += `📱 *WhatsApp:* ${data.telefone}\n`;
+    if (data.email) message += `📧 *Email:* ${data.email}\n`;
+    if (data.evento) message += `🎉 *Evento:* ${data.evento}\n`;
+    if (data.dataEvento) message += `📅 *Data:* ${new Date(data.dataEvento).toLocaleDateString('pt-BR')}\n`;
+    
+    message += `\n🖼️ *IMAGEM DE REFERÊNCIA*\n`;
+    message += `• Imagem: ${selectedImage.alt}\n`;
+    message += `• Arquivo: ${selectedImage.src.split('/').pop()}\n`;
+    
+    message += `\n🎂 *DETALHES DO BOLO DESEJADO*\n`;
+    message += `• Peso: ${peso}kg\n`;
+    message += `• Tipo: Bolo Decorado Similar\n`;
+    if (data.observacoes) message += `• Observações: ${data.observacoes}\n`;
+    
+    message += `\n💰 *VALOR ESTIMADO*\n`;
+    message += `• Preço estimado: R$ ${precoEstimado.toFixed(2)}\n`;
+    message += `• *(Valor final pode variar conforme complexidade)*\n`;
+    
+    message += `\n📋 *CONDIÇÕES*\n`;
+    message += `• Orçamento válido por 7 dias\n`;
+    message += `• Pagamento: 50% entrada + 50% entrega\n`;
+    message += `• Prazo: 3-5 dias úteis\n`;
+    message += `• Entrega gratuita em Campinas (pedidos R$ 150+)\n`;
+    
+    message += `\n📸 *IMPORTANTE*\n`;
+    message += `• Enviarei a imagem de referência em seguida\n`;
+    message += `• Faremos ajustes conforme sua preferência\n`;
+    
+    const whatsappUrl = `https://api.whatsapp.com/send/?phone=5519971307912&text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+    
+    closeProductModal();
+}
+
 // FAQ Toggle
 function toggleFAQ(button) {
     const faqItem = button.parentElement;
@@ -1330,6 +1491,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inicializar filtros da galeria
     if (document.querySelector('.gallery-section') && window.galleryFilters) {
         galleryFilters.init();
+    }
+    
+    // Adicionar handlers de orçamento similar na galeria
+    if (document.querySelector('.gallery-item')) {
+        addGalleryClickHandlers();
     }
 });
 // Menu Mobile

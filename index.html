@@ -80,6 +80,15 @@
     }
     </script>
     
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Vera Lúcia">
+    <meta name="msapplication-TileColor" content="#007aff">
+    <meta name="theme-color" content="#007aff">
+    
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="alternate icon" href="favicon.ico">
@@ -89,7 +98,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!-- Preload Critical Resources -->
     <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="css/mobile.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="css/style.css"></noscript>
+    <noscript><link rel="stylesheet" href="css/mobile.css"></noscript>
     <link rel="preload" href="js/script.js" as="script">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
@@ -120,28 +131,38 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="#home" class="nav-logo">Vera Lúcia</a>
-            <ul class="nav-menu">
-                <li><a href="#bolos-decorados">Bolos</a></li>
-                <li><a href="#paes">Pães</a></li>
-                <li><a href="#galeria">Galeria</a></li>
-                <li><a href="javascript:void(0)" onclick="openCakeCalculator()">Calculadora</a></li>
-                <li><a href="#contato">Contato</a></li>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#bolos-decorados" onclick="closeMenu()">Bolos</a></li>
+                <li><a href="#paes" onclick="closeMenu()">Pães</a></li>
+                <li><a href="#galeria" onclick="closeMenu()">Galeria</a></li>
+                <li><a href="javascript:void(0)" onclick="openCakeCalculator(); closeMenu()">Calculadora</a></li>
+                <li><a href="javascript:void(0)" onclick="visualConfigurator.openConfigurator(); closeMenu()">Configurador</a></li>
+                <li><a href="#contato" onclick="closeMenu()">Contato</a></li>
             </ul>
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema">
-                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="5"/>
-                    <line x1="12" y1="1" x2="12" y2="3"/>
-                    <line x1="12" y1="21" x2="12" y2="23"/>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                    <line x1="1" y1="12" x2="3" y2="12"/>
-                    <line x1="21" y1="12" x2="23" y2="12"/>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                </svg>
-                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
+            <div class="nav-controls">
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Alternar tema">
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+                <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
             </button>
             <button class="cart-button" onclick="openCart()" aria-label="Carrinho">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -332,6 +353,9 @@
         </div>
     </section>
 
+    <!-- Reviews -->
+    <div id="reviews-section-placeholder"></div>
+
     <!-- Contato -->
     <section id="contato" class="contact-section">
         <div class="contact-content">
@@ -385,6 +409,7 @@
     <script src="js/price-calculator.js" defer></script>
     <script src="js/reviews.js" defer></script>
     <script src="js/gallery-filters.js" defer></script>
+    <script src="js/visual-configurator.js" defer></script>
     <script src="js/script.js" defer></script>
 </body>
 </html>

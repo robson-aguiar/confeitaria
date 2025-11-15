@@ -54,65 +54,82 @@ resource "azurerm_linux_web_app" "app" {
   }
 }
 
-# Azure CDN Profile
-resource "azurerm_cdn_profile" "cdn" {
-  name                = "cdn-veralucia-confeitaria"
-  location            = "Global"
+# Azure Front Door Profile (substitui CDN clássico)
+resource "azurerm_cdn_frontdoor_profile" "cdn" {
+  name                = "fd-veralucia-confeitaria"
   resource_group_name = azurerm_resource_group.rg.name
-  sku                 = "Standard_Microsoft"
-  tags                = var.tags
+  sku_name           = "Standard_AzureFrontDoor"
+  tags               = var.tags
 }
 
-# CDN Endpoint
-resource "azurerm_cdn_endpoint" "cdn_endpoint" {
-  name                = "veralucia-confeitaria"
-  profile_name        = azurerm_cdn_profile.cdn.name
-  location            = azurerm_cdn_profile.cdn.location
-  resource_group_name = azurerm_resource_group.rg.name
+# Front Door Endpoint
+resource "azurerm_cdn_frontdoor_endpoint" "cdn_endpoint" {
+  name                     = "veralucia-confeitaria"
+  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.cdn.id
+  enabled                  = true
+}
+
+# Origin Group
+resource "azurerm_cdn_frontdoor_origin_group" "origin_group" {
+  name                     = "app-service-origin-group"
+  cdn_frontdoor_profile_id = azurerm_cdn_frontdoor_profile.cdn.id
   
-  origin {
-    name      = "app-service-origin"
-    host_name = azurerm_linux_web_app.app.default_hostname
+  load_balancing {
+    sample_size                 = 4
+    successful_samples_required = 3
   }
-
-  delivery_rule {
-    name  = "CacheImages"
-    order = 1
-
-    request_uri_condition {
-      operator     = "Contains"
-      match_values = ["/images/"]
-    }
-
-    cache_expiration_action {
-      behavior = "Override"
-      duration = "30.00:00:00"
-    }
+  
+  health_probe {
+    path                = "/"
+    request_type        = "HEAD"
+    protocol            = "Https"
+    interval_in_seconds = 100
   }
+}
 
-  delivery_rule {
-    name  = "CacheAssets"
-    order = 2
+# Origin
+resource "azurerm_cdn_frontdoor_origin" "origin" {
+  name                          = "app-service-origin"
+  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.origin_group.id
+  enabled                       = true
+  
+  certificate_name_check_enabled = true
+  host_name                      = azurerm_linux_web_app.app.default_hostname
+  http_port                      = 80
+  https_port                     = 443
+  origin_host_header            = azurerm_linux_web_app.app.default_hostname
+  priority                      = 1
+  weight                        = 1000
+}
 
-    request_uri_condition {
-      operator     = "Contains"
-      match_values = ["/css/", "/js/", "/favicon"]
-    }
-
-    cache_expiration_action {
-      behavior = "Override"
-      duration = "7.00:00:00"
-    }
+# Front Door Route
+resource "azurerm_cdn_frontdoor_route" "route" {
+  name                          = "default-route"
+  cdn_frontdoor_endpoint_id     = azurerm_cdn_frontdoor_endpoint.cdn_endpoint.id
+  cdn_frontdoor_origin_group_id = azurerm_cdn_frontdoor_origin_group.origin_group.id
+  enabled                       = true
+  
+  forwarding_protocol    = "HttpsOnly"
+  https_redirect_enabled = true
+  patterns_to_match      = ["/*"]
+  supported_protocols    = ["Http", "Https"]
+  
+  cdn_frontdoor_origin_ids = [azurerm_cdn_frontdoor_origin.origin.id]
+  link_to_default_domain   = true
+  
+  cache {
+    query_string_caching_behavior = "IgnoreQueryString"
+    query_strings                 = []
+    compression_enabled           = true
+    content_types_to_compress     = [
+      "text/html",
+      "text/css",
+      "text/javascript",
+      "application/javascript",
+      "application/json",
+      "image/svg+xml"
+    ]
   }
-
-  global_delivery_rule {
-    cache_expiration_action {
-      behavior = "Override"
-      duration = "04:00:00"
-    }
-  }
-
-  tags = var.tags
 }
 
 # Certificado SSL gerenciado gratuito (quando adicionar domínio customizado)

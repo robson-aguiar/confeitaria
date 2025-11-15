@@ -13,14 +13,13 @@ output "resource_group_name" {
   value       = azurerm_resource_group.rg.name
 }
 
-output "cdn_endpoint_url" {
-  description = "URL do CDN Endpoint"
-  value       = "https://${azurerm_cdn_endpoint.cdn_endpoint.fqdn}"
+output "frontdoor_endpoint_url" {
+  description = "URL do Front Door Endpoint"
+  value       = "https://${azurerm_cdn_frontdoor_endpoint.cdn_endpoint.host_name}"
 }
 
-output "cdn_profile_name" {
-  description = "Nome do CDN Profile"
-  value       = azurerm_cdn_profile.cdn.name
+output "frontdoor_profile_name" {
+  description = "Nome do Front Door Profile"
+  value       = azurerm_cdn_frontdoor_profile.cdn.name
 }
-
 

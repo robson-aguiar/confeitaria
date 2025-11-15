@@ -1152,6 +1152,11 @@ function sendSimilarQuote(event) {
     const peso = parseFloat(data.peso);
     const precoEstimado = peso * 85; // Preço médio estimado
     
+    // URL completa da imagem
+    const imageUrl = selectedImage.src.startsWith('http') ? 
+        selectedImage.src : 
+        `${window.location.origin}/${selectedImage.src}`;
+    
     let message = `🎂 *ORÇAMENTO SIMILAR - VERA LÚCIA CONFEITARIA*\n\n`;
     message += `👤 *Cliente:* ${data.nome}\n`;
     message += `📱 *WhatsApp:* ${data.telefone}\n`;
@@ -1160,8 +1165,8 @@ function sendSimilarQuote(event) {
     if (data.dataEvento) message += `📅 *Data:* ${new Date(data.dataEvento).toLocaleDateString('pt-BR')}\n`;
     
     message += `\n🖼️ *IMAGEM DE REFERÊNCIA*\n`;
-    message += `• Imagem: ${selectedImage.alt}\n`;
-    message += `• Arquivo: ${selectedImage.src.split('/').pop()}\n`;
+    message += `• ${selectedImage.alt}\n`;
+    message += `• Ver imagem: ${imageUrl}\n`;
     
     message += `\n🎂 *DETALHES DO BOLO DESEJADO*\n`;
     message += `• Peso: ${peso}kg\n`;
@@ -1177,10 +1182,6 @@ function sendSimilarQuote(event) {
     message += `• Pagamento: 50% entrada + 50% entrega\n`;
     message += `• Prazo: 3-5 dias úteis\n`;
     message += `• Entrega gratuita em Campinas (pedidos R$ 150+)\n`;
-    
-    message += `\n📸 *IMPORTANTE*\n`;
-    message += `• Enviarei a imagem de referência em seguida\n`;
-    message += `• Faremos ajustes conforme sua preferência\n`;
     
     const whatsappUrl = `https://api.whatsapp.com/send/?phone=5519971307912&text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');

@@ -585,12 +585,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Inicializar quando a página carregar
 document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        try {
-            window.galleryFilters.init();
-            console.log('✅ Galeria inicializada');
-        } catch (error) {
-            console.error('❌ Erro na galeria:', error);
+    console.log('🎯 Inicializando galeria...');
+    
+    const gallerySection = document.querySelector('.gallery-section');
+    if (!gallerySection) {
+        console.error('❌ Seção da galeria não encontrada');
+        return;
+    }
+    
+    const galleryGrid = document.querySelector('.gallery-grid');
+    if (!galleryGrid) {
+        console.error('❌ Grid da galeria não encontrado');
+        return;
+    }
+    
+    const galleryFiltersContainer = document.querySelector('.gallery-filters');
+    if (!galleryFiltersContainer) {
+        console.error('❌ Container de filtros não encontrado');
+        return;
+    }
+    
+    console.log('✅ Elementos da galeria encontrados, inicializando...');
+    
+    try {
+        if (window.galleryFilters) {
+            galleryFilters.init();
+            console.log('✅ Galeria inicializada com sucesso');
+        } else {
+            console.error('❌ galleryFilters não está disponível');
         }
-    }, 100);
+    } catch (error) {
+        console.error('❌ Erro ao inicializar galeria:', error);
+    }
 });

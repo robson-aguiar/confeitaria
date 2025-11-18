@@ -615,11 +615,22 @@ function showTab(tabName) {
     document.getElementById(`${tabName}-tab`).classList.add('active');
 }
 
-// Instância global
-window.visualConfigurator = new VisualConfigurator();
+// Instância global - Inicialização imediata
+if (!window.visualConfigurator) {
+    window.visualConfigurator = new VisualConfigurator();
+    console.log('✅ Visual Configurator instanciado');
+}
 
-// Garantir que o configurador esteja disponível globalmente
+// Garantir disponibilidade quando DOM carregar
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔧 DOM carregado, verificando configurador...');
+    
+    // Garantir que a instância existe
+    if (!window.visualConfigurator) {
+        console.log('⚠️ Criando instância do configurador...');
+        window.visualConfigurator = new VisualConfigurator();
+    }
+    
     // Verificar se todas as dependências estão carregadas
     if (typeof closeProductModal === 'undefined') {
         console.warn('closeProductModal não encontrada, definindo fallback');
@@ -633,9 +644,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Verificar se o modal existe
-    if (!document.getElementById('productModal')) {
-        console.error('Modal productModal não encontrado no DOM');
+    const modal = document.getElementById('productModal');
+    if (!modal) {
+        console.error('❌ Modal productModal não encontrado no DOM');
+    } else {
+        console.log('✅ Modal encontrado');
     }
     
-    console.log('✅ Visual Configurator carregado com sucesso');
+    // Testar se o configurador funciona
+    if (window.visualConfigurator && typeof window.visualConfigurator.openConfigurator === 'function') {
+        console.log('✅ Configurador pronto para uso');
+    } else {
+        console.error('❌ Configurador não está funcionando corretamente');
+    }
 });
+
+// Função de teste para debug
+window.testConfigurator = function() {
+    console.log('🧪 Testando configurador...');
+    if (window.visualConfigurator) {
+        try {
+            window.visualConfigurator.openConfigurator();
+            console.log('✅ Teste do configurador passou');
+        } catch (error) {
+            console.error('❌ Erro no teste do configurador:', error);
+        }
+    } else {
+        console.error('❌ visualConfigurator não existe');
+    }
+};

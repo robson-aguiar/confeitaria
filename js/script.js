@@ -1189,7 +1189,96 @@ function sendSimilarQuote(event) {
     closeProductModal();
 }
 
-// FAQ Toggle
+// Função de emergência para o configurador
+function openConfiguradorEmergencia() {
+    console.log('🚨 Função de emergência do configurador chamada');
+    
+    // Tentar usar o configurador normal primeiro
+    if (window.visualConfigurator && typeof window.visualConfigurator.openConfigurator === 'function') {
+        console.log('✅ Usando configurador normal');
+        try {
+            window.visualConfigurator.openConfigurator();
+            return;
+        } catch (error) {
+            console.error('❌ Erro no configurador normal:', error);
+        }
+    }
+    
+    // Fallback: abrir modal simples
+    console.log('⚠️ Usando fallback do configurador');
+    const modal = document.getElementById('productModal');
+    const content = document.getElementById('modalContent');
+    
+    if (!modal || !content) {
+        alert('❌ Erro: Modal não encontrado. Recarregue a página.');
+        return;
+    }
+    
+    content.innerHTML = `
+        <h2 class="modal-title">🎨 Configurador Visual</h2>
+        <p class="modal-description">Configure seu bolo personalizado</p>
+        
+        <div style="text-align: center; padding: 40px;">
+            <div style="background: #f8f9fa; padding: 30px; border-radius: 12px; margin-bottom: 20px;">
+                <h3>🎂 Configurador Temporariamente Indisponível</h3>
+                <p>Estamos trabalhando para resolver este problema.</p>
+                <p>Por favor, entre em contato pelo WhatsApp para fazer seu pedido personalizado.</p>
+            </div>
+            
+            <button onclick="abrirWhatsAppConfigurador()" style="
+                background: #25d366;
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                border-radius: 25px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                margin: 10px;
+            ">
+                📱 Fazer Pedido pelo WhatsApp
+            </button>
+            
+            <button onclick="closeProductModal()" style="
+                background: #6c757d;
+                color: white;
+                border: none;
+                padding: 15px 30px;
+                border-radius: 25px;
+                font-size: 16px;
+                font-weight: 600;
+                cursor: pointer;
+                margin: 10px;
+            ">
+                ❌ Fechar
+            </button>
+        </div>
+    `;
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function abrirWhatsAppConfigurador() {
+    const message = `🎂 *PEDIDO PERSONALIZADO*
+
+Olá! Gostaria de fazer um pedido personalizado.
+
+Por favor, me ajudem com:
+• Formato do bolo (redondo, quadrado, retangular)
+• Número de andares
+• Sabor da massa
+• Recheio
+• Tipo de cobertura
+• Decoração desejada
+• Data do evento
+
+Aguardo retorno! 😊`;
+    
+    const whatsappUrl = `https://api.whatsapp.com/send/?phone=5519971307912&text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+    closeProductModal();
+}
 function toggleFAQ(button) {
     const faqItem = button.parentElement;
     const isActive = faqItem.classList.contains('active');

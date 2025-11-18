@@ -75,13 +75,18 @@ class Free3DFixed {
                 50% { transform: translate(-50%, -50%) rotate(var(--rotation)) translateY(-30px) translateZ(5px); }
             }
 
+            @keyframes sparkle {
+                0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+                50% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+            }
+
             @keyframes rotate3d {
                 from { transform: rotateX(-15deg) rotateY(20deg); }
                 to { transform: rotateX(-15deg) rotateY(380deg); }
             }
 
             .cake-3d-wrapper.rotating {
-                animation: rotate3d 4s linear infinite;
+                animation: rotate3d 6s linear infinite;
             }
 
             .cake-top-decoration {
@@ -91,8 +96,8 @@ class Free3DFixed {
             }
 
             @keyframes bounce {
-                0%, 100% { transform: translateX(-50%) translateY(0); }
-                50% { transform: translateX(-50%) translateY(-5px); }
+                0%, 100% { transform: translateX(-50%) translateY(0) scale(1); }
+                50% { transform: translateX(-50%) translateY(-8px) scale(1.1); }
             }
 
             .controls-3d {
@@ -220,75 +225,190 @@ class Free3DFixed {
         
         let html = '<div class="cake-3d-wrapper" id="cake-wrapper">';
         
-        // Gerar andares
+        // Gerar andares com mais detalhes
         for (let i = 0; i < andares; i++) {
-            const size = 100 - (i * 15);
-            const height = 35;
-            const bottom = i * 30;
+            const size = 120 - (i * 20);
+            const height = 45;
+            const bottom = i * 40;
             
             html += `
-                <div class="cake-tier" style="
+                <div class="cake-tier tier-${i}" style="
                     width: ${size}px;
                     height: ${height}px;
                     bottom: ${bottom}px;
-                    background: linear-gradient(135deg, ${corPrimaria} 0%, ${corSecundaria} 100%);
+                    background: linear-gradient(135deg, ${corPrimaria} 0%, ${corSecundaria} 50%, ${corPrimaria} 100%);
                     ${formato === 'redondo' ? 'border-radius: 50%;' : formato === 'quadrado' ? 'border-radius: 8px;' : 'border-radius: 15px;'}
+                    box-shadow: 
+                        0 4px 8px rgba(0,0,0,0.3),
+                        inset 0 2px 4px rgba(255,255,255,0.3),
+                        inset 0 -2px 4px rgba(0,0,0,0.1);
+                    position: relative;
+                    border: 2px solid rgba(255,255,255,0.4);
                 ">
+                    <!-- Cobertura do bolo -->
+                    <div style="
+                        position: absolute;
+                        top: -3px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        width: 95%;
+                        height: 8px;
+                        background: linear-gradient(45deg, ${corSecundaria}, ${corPrimaria});
+                        ${formato === 'redondo' ? 'border-radius: 50%;' : 'border-radius: 4px;'}
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                    "></div>
+                    
+                    <!-- Textura do bolo -->
+                    <div style="
+                        position: absolute;
+                        top: 10%;
+                        left: 10%;
+                        right: 10%;
+                        bottom: 10%;
+                        background: repeating-linear-gradient(
+                            45deg,
+                            transparent,
+                            transparent 2px,
+                            rgba(255,255,255,0.1) 2px,
+                            rgba(255,255,255,0.1) 4px
+                        );
+                        ${formato === 'redondo' ? 'border-radius: 50%;' : 'border-radius: 4px;'}
+                    "></div>
+                    
                     ${this.generateDecorations(i, decoracao, size)}
+                    ${this.generateCreamDetails(i, size, formato)}
                 </div>
             `;
         }
         
-        // Decoração do topo
-        html += this.generateTopDecoration(decoracao);
+        // Base/prato do bolo
+        html += `
+            <div class="cake-base-plate" style="
+                position: absolute;
+                bottom: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: ${140}px;
+                height: 12px;
+                background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+                border-radius: 50%;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                border: 1px solid #ccc;
+            "></div>
+        `;
+        
+        // Decoração do topo mais elaborada
+        html += this.generateTopDecoration(decoracao, andares);
         html += '</div>';
         
         return html;
+    }
+
+    generateCreamDetails(tier, size, formato) {
+        // Adicionar detalhes de chantilly/creme
+        let creamHtml = '';
+        const creamCount = Math.floor(size / 20);
+        
+        for (let i = 0; i < creamCount; i++) {
+            const angle = (360 / creamCount) * i;
+            creamHtml += `
+                <div style="
+                    position: absolute;
+                    top: -6px;
+                    left: 50%;
+                    transform: translateX(-50%) rotate(${angle}deg) translateY(-${size/2 - 10}px);
+                    width: 8px;
+                    height: 12px;
+                    background: radial-gradient(circle, #fff, #f0f0f0);
+                    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+                    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+                "></div>
+            `;
+        }
+        
+        return creamHtml;
     }
 
     generateDecorations(tier, tipo, size) {
         if (tipo === 'simples') return '';
         
         const icons = {
-            flores: '🌸',
-            elegante: '✨',
-            personagem: '🎭'
+            flores: { emoji: '🌸', color: '#ff69b4' },
+            elegante: { emoji: '✨', color: '#ffd700' },
+            personagem: { emoji: '🎭', color: '#87ceeb' }
         };
         
-        const icon = icons[tipo] || '✨';
+        const decoration = icons[tipo] || icons.elegante;
         let decorations = '';
-        const count = Math.max(4, Math.floor(size / 15));
+        const count = Math.max(6, Math.floor(size / 12));
         
         for (let i = 0; i < count; i++) {
             const angle = (360 / count) * i;
             decorations += `
                 <div class="tier-decoration" style="
                     --rotation: ${angle}deg;
+                    position: absolute;
                     top: 50%;
                     left: 50%;
-                    font-size: ${10 + tier}px;
-                ">${icon}</div>
+                    transform: translate(-50%, -50%) rotate(${angle}deg) translateY(-${size/2 + 5}px);
+                    font-size: ${12 + tier * 2}px;
+                    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+                    animation: float 3s ease-in-out infinite;
+                    animation-delay: ${i * 0.2}s;
+                ">${decoration.emoji}</div>
             `;
         }
         
         return decorations;
     }
 
-    generateTopDecoration(tipo) {
-        const topIcons = {
-            simples: '🕯️',
-            flores: '🌺',
-            elegante: '👑',
-            personagem: '🎪'
+    generateTopDecoration(tipo, andares) {
+        const topDecorations = {
+            simples: { main: '🕯️', extras: ['✨'] },
+            flores: { main: '🌺', extras: ['🌸', '🌿', '🌹'] },
+            elegante: { main: '👑', extras: ['💎', '✨', '⭐'] },
+            personagem: { main: '🎪', extras: ['🎭', '🎨', '🎈'] }
         };
         
-        return `
+        const decoration = topDecorations[tipo] || topDecorations.simples;
+        const topY = -30 - (andares * 40);
+        
+        let topHtml = `
+            <!-- Decoração principal do topo -->
             <div class="cake-top-decoration" style="
-                top: -25px;
+                position: absolute;
+                top: ${topY}px;
                 left: 50%;
-                font-size: 18px;
-            ">${topIcons[tipo] || '🕯️'}</div>
+                transform: translateX(-50%);
+                font-size: 24px;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                animation: bounce 2s ease-in-out infinite;
+                z-index: 100;
+            ">${decoration.main}</div>
         `;
+        
+        // Decorações extras ao redor
+        decoration.extras.forEach((extra, index) => {
+            const angle = (index * 120) + 30;
+            const radius = 25;
+            const x = Math.cos(angle * Math.PI / 180) * radius;
+            const y = Math.sin(angle * Math.PI / 180) * radius;
+            
+            topHtml += `
+                <div style="
+                    position: absolute;
+                    top: ${topY + y}px;
+                    left: calc(50% + ${x}px);
+                    transform: translateX(-50%);
+                    font-size: 14px;
+                    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+                    animation: sparkle 2s ease-in-out infinite;
+                    animation-delay: ${index * 0.3}s;
+                ">${extra}</div>
+            `;
+        });
+        
+        return topHtml;
     }
 
     switchView(viewType) {
@@ -346,49 +466,122 @@ class Free3DFixed {
     }
 
     drawTier(ctx, tierIndex, formato, cor1, cor2) {
-        const size = 50 - (tierIndex * 8);
-        const height = 30;
+        const size = 60 - (tierIndex * 10);
+        const height = 35;
         const x = 175;
-        const y = 280 - (tierIndex * 25);
-        
-        // Gradiente
-        const gradient = ctx.createLinearGradient(x - size, y - height, x + size, y + height);
-        gradient.addColorStop(0, cor1);
-        gradient.addColorStop(1, cor2);
-        
-        ctx.fillStyle = gradient;
-        ctx.strokeStyle = 'rgba(255,255,255,0.5)';
-        ctx.lineWidth = 2;
+        const y = 280 - (tierIndex * 30);
         
         ctx.save();
         
+        // Sombra do andar
+        ctx.fillStyle = 'rgba(0,0,0,0.2)';
+        ctx.beginPath();
         if (formato === 'redondo') {
-            // Cilindro isométrico
-            // Topo
-            ctx.beginPath();
-            ctx.ellipse(x, y - height/2, size, size/2.5, 0, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
-            
-            // Lateral
-            ctx.fillRect(x - size, y - height/2, size * 2, height);
-            ctx.strokeRect(x - size, y - height/2, size * 2, height);
-            
+            ctx.ellipse(x + 3, y + height/2 + 3, size, size/3, 0, 0, Math.PI * 2);
+        } else {
+            ctx.fillRect(x - size + 3, y - height/2 + 3, size * 2, height);
+        }
+        ctx.fill();
+        
+        // Gradiente principal do bolo
+        const gradient = ctx.createRadialGradient(x, y, 0, x, y, size);
+        gradient.addColorStop(0, cor1);
+        gradient.addColorStop(0.7, cor2);
+        gradient.addColorStop(1, this.darkenColor(cor2, 20));
+        
+        ctx.fillStyle = gradient;
+        ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+        ctx.lineWidth = 2;
+        
+        if (formato === 'redondo') {
+            // Desenhar cilindro mais realista
             // Base
             ctx.beginPath();
-            ctx.ellipse(x, y + height/2, size, size/2.5, 0, 0, Math.PI * 2);
+            ctx.ellipse(x, y + height/2, size, size/3, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Lateral com gradiente
+            const sideGradient = ctx.createLinearGradient(x - size, y, x + size, y);
+            sideGradient.addColorStop(0, this.darkenColor(cor2, 30));
+            sideGradient.addColorStop(0.5, cor2);
+            sideGradient.addColorStop(1, this.darkenColor(cor2, 30));
+            
+            ctx.fillStyle = sideGradient;
+            ctx.fillRect(x - size, y - height/2, size * 2, height);
+            
+            // Topo com brilho
+            const topGradient = ctx.createRadialGradient(x, y - height/2, 0, x, y - height/2, size);
+            topGradient.addColorStop(0, this.lightenColor(cor1, 30));
+            topGradient.addColorStop(0.8, cor1);
+            topGradient.addColorStop(1, cor2);
+            
+            ctx.fillStyle = topGradient;
+            ctx.beginPath();
+            ctx.ellipse(x, y - height/2, size, size/3, 0, 0, Math.PI * 2);
             ctx.fill();
             ctx.stroke();
+            
+            // Cobertura/chantilly no topo
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.ellipse(x, y - height/2 - 2, size * 0.9, size/4, 0, 0, Math.PI * 2);
+            ctx.fill();
+            
         } else {
-            // Formato quadrado/retangular
+            // Formato quadrado/retangular mais detalhado
             const width = formato === 'retangular' ? size * 1.4 : size;
             
-            // Topo
+            // Base
             ctx.fillRect(x - width, y - height/2, width * 2, height);
             ctx.strokeRect(x - width, y - height/2, width * 2, height);
+            
+            // Cobertura no topo
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(x - width * 0.9, y - height/2 - 3, width * 1.8, 6);
+        }
+        
+        // Adicionar textura de bolo
+        this.addCakeTexture(ctx, x, y, size, height, formato);
+        
+        ctx.restore();
+    }
+
+    addCakeTexture(ctx, x, y, size, height, formato) {
+        ctx.save();
+        ctx.globalAlpha = 0.3;
+        
+        // Textura pontilhada para simular migalhas
+        ctx.fillStyle = '#ffffff';
+        for (let i = 0; i < 20; i++) {
+            const px = x + (Math.random() - 0.5) * size * 1.5;
+            const py = y + (Math.random() - 0.5) * height * 0.8;
+            ctx.beginPath();
+            ctx.arc(px, py, Math.random() * 2, 0, Math.PI * 2);
+            ctx.fill();
         }
         
         ctx.restore();
+    }
+
+    darkenColor(color, percent) {
+        const num = parseInt(color.replace("#", ""), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) - amt;
+        const G = (num >> 8 & 0x00FF) - amt;
+        const B = (num & 0x0000FF) - amt;
+        return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+            (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+            (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
+    }
+
+    lightenColor(color, percent) {
+        const num = parseInt(color.replace("#", ""), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = (num >> 16) + amt;
+        const G = (num >> 8 & 0x00FF) + amt;
+        const B = (num & 0x0000FF) + amt;
+        return "#" + (0x1000000 + (R > 255 ? 255 : R) * 0x10000 +
+            (G > 255 ? 255 : G) * 0x100 + (B > 255 ? 255 : B)).toString(16).slice(1);
     }
 
     drawCanvasDecorations(ctx, tipo, andares) {

@@ -84,8 +84,23 @@ class VisualConfigurator {
     }
 
     openConfigurator() {
+        console.log('🎯 openConfigurator chamado');
+        
         const modal = document.getElementById('productModal');
+        if (!modal) {
+            console.error('❌ Modal productModal não encontrado');
+            alert('Erro: Modal não encontrado. Recarregue a página.');
+            return;
+        }
+        
         const content = document.getElementById('modalContent');
+        if (!content) {
+            console.error('❌ modalContent não encontrado');
+            alert('Erro: Conteúdo do modal não encontrado. Recarregue a página.');
+            return;
+        }
+        
+        console.log('✅ Modal e conteúdo encontrados, carregando configurador...');
         
         content.innerHTML = `
             <h2 class="modal-title">🎨 Configurador Visual</h2>
@@ -602,3 +617,25 @@ function showTab(tabName) {
 
 // Instância global
 window.visualConfigurator = new VisualConfigurator();
+
+// Garantir que o configurador esteja disponível globalmente
+document.addEventListener('DOMContentLoaded', function() {
+    // Verificar se todas as dependências estão carregadas
+    if (typeof closeProductModal === 'undefined') {
+        console.warn('closeProductModal não encontrada, definindo fallback');
+        window.closeProductModal = function() {
+            const modal = document.getElementById('productModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        };
+    }
+    
+    // Verificar se o modal existe
+    if (!document.getElementById('productModal')) {
+        console.error('Modal productModal não encontrado no DOM');
+    }
+    
+    console.log('✅ Visual Configurator carregado com sucesso');
+});

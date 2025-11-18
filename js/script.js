@@ -27,6 +27,13 @@ function addToCart(item) {
     cart.push(item);
     updateCartBadge();
     
+    // Adicionar pontos (estimativa: R$ 1 = 10 pontos, preço médio R$ 80)
+    if (window.loyaltySystem) {
+        const estimatedPrice = item.preco || 80; // Preço padrão se não especificado
+        const points = Math.floor(estimatedPrice * 0.1); // 10% do valor em pontos
+        loyaltySystem.addPoints(points, 'purchase');
+    }
+    
     // Analytics tracking
     if (window.analytics) {
         analytics.trackAddToCart({
@@ -1625,6 +1632,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Inicializar filtros da galeria
     // Removido: inicialização duplicada - já é feita no gallery-filters.js
+    
+    // Inicializar sistema de fidelidade
+    if (typeof LoyaltySystem !== 'undefined') {
+        window.loyaltySystem = new LoyaltySystem();
+        loyaltySystem.showPointsInHeader();
+    }
     
     // Adicionar handlers de orçamento similar na galeria
     if (document.querySelector('.gallery-item')) {

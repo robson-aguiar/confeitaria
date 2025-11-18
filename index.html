@@ -110,6 +110,18 @@
     *{margin:0;padding:0;box-sizing:border-box}
     :root{--black:#000;--white:#fff;--gray:#86868b;--light-gray:#f5f5f7;--bg-primary:#fff;--bg-secondary:#f5f5f7;--text-primary:#000;--text-secondary:#86868b;--border-color:rgba(0,0,0,.1)}
     .dark-mode{--bg-primary:#1a1a1a;--bg-secondary:#2a2a2a;--text-primary:#fff;--text-secondary:#a0a0a0;--border-color:rgba(255,255,255,.1)}
+    .points-badge{background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:20px;padding:8px 12px;margin-right:10px;display:flex;align-items:center;gap:5px;font-size:14px;cursor:pointer;transition:all 0.3s ease}
+    .points-badge:hover{background:var(--text-primary);color:var(--bg-primary)}
+    .loyalty-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:2000}
+    .loyalty-modal-content{background:var(--bg-primary);padding:2rem;border-radius:12px;max-width:400px;width:90%;text-align:center}
+    .loyalty-modal-content h3{margin-bottom:1rem;color:var(--text-primary)}
+    .loyalty-modal-content input{width:100%;padding:12px;margin:8px 0;border:1px solid var(--border-color);border-radius:8px;background:var(--bg-secondary)}
+    .loyalty-actions{display:flex;gap:10px;margin-top:1rem}
+    .loyalty-actions button{flex:1;padding:12px;border:none;border-radius:8px;cursor:pointer;font-weight:500}
+    .btn-primary{background:#007AFF;color:white}
+    .btn-secondary{background:var(--bg-secondary);color:var(--text-primary)}
+    .points-notification{position:fixed;top:100px;right:20px;background:#34C759;color:white;padding:12px 20px;border-radius:8px;z-index:2000;animation:slideIn 0.3s ease}
+    @keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
     html{scroll-behavior:smooth}
     body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text-primary);background:var(--bg-primary);overflow-x:hidden}
     .navbar{position:fixed;top:0;width:100%;background:rgba(255,255,255,.8);backdrop-filter:blur(20px);z-index:1000;border-bottom:1px solid rgba(0,0,0,.1)}

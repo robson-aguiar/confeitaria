@@ -1,7 +1,8 @@
-// Sistema de Fidelidade - Pontos e Recompensas
+// Sistema de Fidelidade Híbrido - Vera Lúcia Confeitaria
 class LoyaltySystem {
     constructor() {
         this.customerData = this.loadCustomerData();
+        this.isLoggedIn = !!this.customerData.whatsapp;
         this.pointsRules = {
             purchase: 10, // 10 pontos por R$ 1
             review: 50,   // 50 pontos por avaliação
@@ -11,10 +12,10 @@ class LoyaltySystem {
         };
         
         this.rewards = [
-            { id: 1, name: 'Desconto 10%', points: 500, type: 'discount', value: 0.1 },
-            { id: 2, name: 'Bolo Caseirinho Grátis', points: 800, type: 'product', value: 'caseirinho' },
-            { id: 3, name: 'Desconto 20%', points: 1200, type: 'discount', value: 0.2 },
-            { id: 4, name: 'Entrega Grátis', points: 300, type: 'shipping', value: 'free' },
+            { id: 1, name: 'Entrega Grátis', points: 300, type: 'shipping', value: 'free' },
+            { id: 2, name: 'Desconto 10%', points: 500, type: 'discount', value: 0.1 },
+            { id: 3, name: 'Bolo Caseirinho Grátis', points: 800, type: 'product', value: 'caseirinho' },
+            { id: 4, name: 'Desconto 20%', points: 1200, type: 'discount', value: 0.2 },
             { id: 5, name: 'Bolo Decorado 50% OFF', points: 1500, type: 'discount_category', value: { category: 'bolos', discount: 0.5 } }
         ];
     }
@@ -27,7 +28,135 @@ class LoyaltySystem {
             totalSpent: 0,
             orders: 0,
             rewards: [],
+            whatsapp: null, // null = não logado
+            name: null,
             joinDate: new Date().toISOString()
+        };
+    }
+
+    // Adicionar pontos (funciona com ou sem login)
+    addPoints(amount, reason = 'purchase') {
+        this.customerData.points += amount;
+        this.updateLevel();
+        this.saveData();
+        
+        // Se tem pontos suficientes e não está logado, sugerir criar perfil
+        if (!this.isLoggedIn && this.customerData.points >= 300) {
+            this.showSaveProfileSuggestion();
+        }
+        
+        this.showPointsNotification(amount, reason);
+    }
+
+    // Sugerir salvar perfil quando acumular pontos
+    showSaveProfileSuggestion() {
+        const modal = document.createElement('div');
+        modal.className = 'loyalty-modal';
+        modal.innerHTML = `
+            <div class="loyalty-modal-content">
+                <h3>🎉 Parabéns!</h3>
+                <p>Você já tem <strong>${this.customerData.points} pontos</strong>!</p>
+                <p>Quer salvar seu perfil para não perder os pontos?</p>
+                <div class="loyalty-actions">
+                    <button onclick="loyaltySystem.showLoginForm()" class="btn-primary">
+                        Salvar Perfil
+                    </button>
+                    <button onclick="loyaltySystem.closeModal()" class="btn-secondary">
+                        Depois
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    // Login simples com WhatsApp
+    showLoginForm() {
+        this.closeModal();
+        const modal = document.createElement('div');
+        modal.className = 'loyalty-modal';
+        modal.innerHTML = `
+            <div class="loyalty-modal-content">
+                <h3>💾 Salvar Perfil</h3>
+                <p>Informe seus dados para salvar os pontos:</p>
+                <input type="text" id="customer-name" placeholder="Seu nome" required>
+                <input type="tel" id="customer-whatsapp" placeholder="WhatsApp (19) 99999-9999" required>
+                <div class="loyalty-actions">
+                    <button onclick="loyaltySystem.saveProfile()" class="btn-primary">
+                        Salvar
+                    </button>
+                    <button onclick="loyaltySystem.closeModal()" class="btn-secondary">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    // Salvar perfil do cliente
+    saveProfile() {
+        const name = document.getElementById('customer-name').value.trim();
+        const whatsapp = document.getElementById('customer-whatsapp').value.trim();
+        
+        if (!name || !whatsapp) {
+            alert('Por favor, preencha todos os campos');
+            return;
+        }
+        
+        this.customerData.name = name;
+        this.customerData.whatsapp = whatsapp;
+        this.isLoggedIn = true;
+        this.saveData();
+        this.closeModal();
+        
+        alert(`✅ Perfil salvo! Seus ${this.customerData.points} pontos estão seguros.`);
+    }
+
+    // Mostrar pontos no header
+    showPointsInHeader() {
+        const navControls = document.querySelector('.nav-controls');
+        if (!navControls || document.getElementById('points-badge')) return;
+        
+        const pointsBadge = document.createElement('button');
+        pointsBadge.id = 'points-badge';
+        pointsBadge.className = 'points-badge';
+        pointsBadge.onclick = () => this.showLoyaltyModal();
+        pointsBadge.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+            ${this.customerData.points}
+        `;
+        navControls.insertBefore(pointsBadge, navControls.firstChild);
+    }
+
+    closeModal() {
+        const modal = document.querySelector('.loyalty-modal');
+        if (modal) modal.remove();
+    }
+
+    saveData() {
+        localStorage.setItem('vera_lucia_loyalty', JSON.stringify(this.customerData));
+    }
+
+    updateLevel() {
+        const points = this.customerData.points;
+        if (points >= 2000) this.customerData.level = 'Diamante';
+        else if (points >= 1000) this.customerData.level = 'Ouro';
+        else if (points >= 500) this.customerData.level = 'Prata';
+        else this.customerData.level = 'Bronze';
+    }
+
+    showPointsNotification(amount, reason) {
+        const notification = document.createElement('div');
+        notification.className = 'points-notification';
+        notification.innerHTML = `+${amount} pontos! 🎉`;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => notification.remove(), 3000);
+    }
+}
         };
     }
 

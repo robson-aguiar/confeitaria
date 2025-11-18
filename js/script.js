@@ -831,15 +831,8 @@ function updateSummary() {
 }
 
 function sendCakeOrder() {
-    console.log('📱 Enviando pedido do bolo...');
-    
     const temaInput = document.getElementById('tema-input');
-    if (temaInput && temaInput.value.trim()) {
-        cakeConfig.temaTopper = temaInput.value.trim();
-        console.log('✅ Tema do topper capturado:', cakeConfig.temaTopper);
-    } else {
-        console.log('⚠️ Tema do topper não informado');
-    }
+    if (temaInput) cakeConfig.temaTopper = temaInput.value;
     
     const tipoNomes = {
         'tradicional': 'Tradicional',

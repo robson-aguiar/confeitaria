@@ -57,9 +57,22 @@ class GalleryFilters {
     }
 
     init() {
-        this.renderFilters();
-        this.renderGallery();
-        this.setupSearch();
+        console.log('🔧 Executando init() da galeria...');
+        
+        try {
+            console.log('📋 Renderizando filtros...');
+            this.renderFilters();
+            
+            console.log('🖼️ Renderizando galeria...');
+            this.renderGallery();
+            
+            console.log('🔍 Configurando busca...');
+            this.setupSearch();
+            
+            console.log('✅ Init da galeria concluído com sucesso');
+        } catch (error) {
+            console.error('❌ Erro durante init da galeria:', error);
+        }
     }
 
     renderFilters() {
@@ -201,12 +214,24 @@ class GalleryFilters {
     }
 
     renderGallery() {
+        console.log('🎨 Iniciando renderGallery...');
+        
         const galleryGrid = document.querySelector('.gallery-grid');
+        if (!galleryGrid) {
+            console.error('❌ .gallery-grid não encontrado');
+            return;
+        }
+        
+        console.log(`📊 Itens filtrados: ${this.filteredItems.length}`);
+        
         const startIndex = (this.currentPage - 1) * this.itemsPerPage;
         const endIndex = startIndex + this.itemsPerPage;
         const itemsToShow = this.filteredItems.slice(startIndex, endIndex);
         
+        console.log(`📄 Página ${this.currentPage}: mostrando ${itemsToShow.length} itens`);
+        
         if (itemsToShow.length === 0) {
+            console.log('⚠️ Nenhum item para mostrar');
             galleryGrid.innerHTML = `
                 <div class="no-results">
                     <h3>🔍 Nenhum resultado encontrado</h3>
@@ -560,7 +585,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Inicializar quando a página carregar
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.querySelector('.gallery-section')) {
-        galleryFilters.init();
+    console.log('🎯 Inicializando galeria...');
+    
+    const gallerySection = document.querySelector('.gallery-section');
+    if (!gallerySection) {
+        console.error('❌ Seção da galeria não encontrada');
+        return;
+    }
+    
+    const galleryGrid = document.querySelector('.gallery-grid');
+    if (!galleryGrid) {
+        console.error('❌ Grid da galeria não encontrado');
+        return;
+    }
+    
+    const galleryFiltersContainer = document.querySelector('.gallery-filters');
+    if (!galleryFiltersContainer) {
+        console.error('❌ Container de filtros não encontrado');
+        return;
+    }
+    
+    console.log('✅ Elementos da galeria encontrados, inicializando...');
+    
+    try {
+        if (window.galleryFilters) {
+            galleryFilters.init();
+            console.log('✅ Galeria inicializada com sucesso');
+        } else {
+            console.error('❌ galleryFilters não está disponível');
+        }
+    } catch (error) {
+        console.error('❌ Erro ao inicializar galeria:', error);
     }
 });

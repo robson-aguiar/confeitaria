@@ -1490,9 +1490,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Inicializar filtros da galeria
-    if (document.querySelector('.gallery-section') && window.galleryFilters) {
-        galleryFilters.init();
-    }
+    // Removido: inicialização duplicada - já é feita no gallery-filters.js
     
     // Adicionar handlers de orçamento similar na galeria
     if (document.querySelector('.gallery-item')) {

@@ -131,6 +131,7 @@ class VisualConfigurator {
                             <button class="tab-btn" onclick="showTab('sabores')" ontouchstart="">Sabores</button>
                             <button class="tab-btn" onclick="showTab('cores')" ontouchstart="">Cores</button>
                             <button class="tab-btn" onclick="showTab('decoracao')" ontouchstart="">Decoração</button>
+                            <button class="tab-btn" onclick="showTab('tema')" ontouchstart="">Tema</button>
                         </div>
                         
                         <div class="tab-content">
@@ -145,6 +146,9 @@ class VisualConfigurator {
                             </div>
                             <div id="decoracao-tab" class="tab-panel">
                                 ${this.renderDecoracao()}
+                            </div>
+                            <div id="tema-tab" class="tab-panel">
+                                ${this.renderTema()}
                             </div>
                         </div>
                     </div>
@@ -475,6 +479,9 @@ class VisualConfigurator {
                 <div class="summary-item">
                     <strong>Decoração:</strong> ${this.config.decoracao}
                 </div>
+                <div class="summary-item">
+                    <strong>Tema:</strong> ${this.config.tema}
+                </div>
             </div>
             <div class="price-section">
                 <div class="estimated-price">
@@ -587,6 +594,7 @@ class VisualConfigurator {
         message += `• Recheio: ${this.config.recheio}\n`;
         message += `• Cobertura: ${this.config.cobertura}\n`;
         message += `• Decoração: ${this.config.decoracao}\n`;
+        message += `• Tema: ${this.config.tema}\n`;
         message += `• Cores: ${this.config.corPrimaria} / ${this.config.corSecundaria}\n\n`;
         message += `💰 *Preço Estimado: R$ ${preco.toFixed(2)}*\n`;
         message += `*(Valor final pode variar conforme complexidade)*\n\n`;

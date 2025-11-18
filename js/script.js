@@ -146,9 +146,13 @@ function sendCartOrder() {
 
 // Dark Mode Toggle
 function toggleTheme() {
+    console.log('🌙 Toggle theme chamado');
+    
     const html = document.documentElement;
-    const currentTheme = html.getAttribute('data-theme');
+    const currentTheme = html.getAttribute('data-theme') || 'light';
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    console.log(`Mudando de ${currentTheme} para ${newTheme}`);
     
     html.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
@@ -157,28 +161,58 @@ function toggleTheme() {
     const sunIcon = document.querySelector('.sun-icon');
     const moonIcon = document.querySelector('.moon-icon');
     
-    if (newTheme === 'dark') {
-        sunIcon.style.display = 'none';
-        moonIcon.style.display = 'block';
+    if (sunIcon && moonIcon) {
+        if (newTheme === 'dark') {
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+            console.log('✅ Modo escuro ativado');
+        } else {
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+            console.log('✅ Modo claro ativado');
+        }
     } else {
-        sunIcon.style.display = 'block';
-        moonIcon.style.display = 'none';
+        console.error('❌ Ícones do tema não encontrados');
+    }
+}
+
+// Load saved theme - Melhorado
+function initializeTheme() {
+    console.log('🎨 Inicializando tema...');
+    
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+    
+    console.log(`Tema detectado: ${theme}`);
+    
+    const html = document.documentElement;
+    html.setAttribute('data-theme', theme);
+    
+    // Set initial icon state
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+    
+    if (sunIcon && moonIcon) {
+        if (theme === 'dark') {
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+        } else {
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+        }
+        console.log('✅ Ícones do tema configurados');
+    } else {
+        console.error('❌ Ícones do tema não encontrados na inicialização');
     }
 }
 
 // Load saved theme
 window.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
+    console.log('🚀 DOM carregado, inicializando tema...');
     
-    if (savedTheme === 'dark') {
-        const sunIcon = document.querySelector('.sun-icon');
-        const moonIcon = document.querySelector('.moon-icon');
-        if (sunIcon && moonIcon) {
-            sunIcon.style.display = 'none';
-            moonIcon.style.display = 'block';
-        }
-    }
+    // Chamar função de inicialização do tema
+    initializeTheme();
 });
 
 // Smooth scroll para links de navegação

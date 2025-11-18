@@ -1,4 +1,6 @@
-// 3D Gratuito - Versão Corrigida e Testada
+// 3D Gratuito - Versão Corrigida e Testada v2.0
+console.log('🎂 3D Melhorado v2.0 carregado - Agora parece bolo de verdade!');
+
 class Free3DFixed {
     constructor() {
         this.currentView = 'css';

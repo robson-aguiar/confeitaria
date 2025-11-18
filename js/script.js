@@ -1,3 +1,15 @@
+// Performance: Lazy loading para todas as imagens
+const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+            imageObserver.unobserve(img);
+        }
+    });
+});
+
 // Dark Mode Toggle
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
@@ -1642,6 +1654,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Adicionar handlers de orçamento similar na galeria
     if (document.querySelector('.gallery-item')) {
         addGalleryClickHandlers();
+    }
+    
+    // Inicializar Instagram API
+    if (typeof InstagramAPI !== 'undefined') {
+        instagramAPI.loadConfig();
+        instagramAPI.renderInstagramGallery();
+        instagramAPI.startAutoUpdate(30); // Atualizar a cada 30 minutos
+    }
+    
+    // Registrar Service Worker para PWA
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(() => console.log('✅ PWA ativo'))
+            .catch(() => console.log('❌ PWA falhou'));
     }
 });
 // Menu Mobile

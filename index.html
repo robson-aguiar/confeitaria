@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#007AFF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="description" content="Vera Lúcia Confeitaria em Campinas - Bolos decorados personalizados, bolos caseirinhos e pães artesanais. Configurador online, entrega rápida. ⭐ 5 estrelas no Google">
     <title>Vera Lúcia Confeitaria Campinas - Bolos Decorados Personalizados | Entrega Rápida</title>
     
@@ -121,6 +124,21 @@
     .btn-primary{background:#007AFF;color:white}
     .btn-secondary{background:var(--bg-secondary);color:var(--text-primary)}
     .points-notification{position:fixed;top:100px;right:20px;background:#34C759;color:white;padding:12px 20px;border-radius:8px;z-index:2000;animation:slideIn 0.3s ease}
+    .instagram-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+    .instagram-header h3{color:var(--text-primary);margin:0}
+    .follow-btn{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:14px;font-weight:500}
+    .instagram-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+    .instagram-post{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;transition:transform 0.3s ease}
+    .instagram-post:hover{transform:scale(1.05)}
+    .instagram-post img{width:100%;height:100%;object-fit:cover}
+    .post-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.8));color:white;padding:10px;font-size:12px;opacity:0;transition:opacity 0.3s ease}
+    .instagram-post:hover .post-overlay{opacity:1}
+    .loading{text-align:center;padding:2rem;color:var(--text-secondary)}
+    .ar-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:2000}
+    .ar-content{background:var(--bg-primary);padding:2rem;border-radius:12px;max-width:400px;width:90%;text-align:center}
+    .ar-viewer{margin:1rem 0}
+    .ar-controls{display:flex;gap:10px;margin-top:1rem}
+    .ar-controls button{flex:1;padding:12px;border:none;border-radius:8px;cursor:pointer;font-weight:500}
     @keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
     html{scroll-behavior:smooth}
     body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text-primary);background:var(--bg-primary);overflow-x:hidden}
@@ -264,6 +282,13 @@
         </div>
     </section>
 
+    <!-- Instagram Gallery -->
+    <section id="instagram-section" class="gallery-section fade-in">
+        <div id="instagram-gallery">
+            <!-- Posts do Instagram serão carregados aqui -->
+        </div>
+    </section>
+
     <!-- FAQ -->
     <section id="faq" class="faq-section fade-in">
         <h2 class="section-title">Perguntas Frequentes</h2>
@@ -395,6 +420,7 @@
     <script src="js/price-calculator.js" defer></script>
     <script src="js/reviews.js" defer></script>
     <script src="js/gallery-filters.js" defer></script>
+    <script src="js/instagram-api.js" defer></script>
     <script src="js/visual-configurator.js?v=2.0" defer></script>
     <script src="js/free-3d-fixed.js?v=2.0" defer></script>
 </body>

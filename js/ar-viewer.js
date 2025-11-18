@@ -1,104 +1,84 @@
-// AR Viewer - Realidade Aumentada para Bolos
-// Usando WebXR API + Model Viewer
-
+// AR Viewer - Visualização em Realidade Aumentada
 class ARViewer {
     constructor() {
-        this.isARSupported = false;
+        this.isSupported = this.checkARSupport();
         this.currentModel = null;
-        this.checkARSupport();
     }
 
-    async checkARSupport() {
-        if ('xr' in navigator) {
-            this.isARSupported = await navigator.xr.isSessionSupported('immersive-ar');
+    checkARSupport() {
+        return 'xr' in navigator && 'requestSession' in navigator.xr;
+    }
+
+    // Mostrar bolo em AR (fallback para visualização 3D)
+    showCakeInAR(config) {
+        if (!this.isSupported) {
+            this.showFallback3D(config);
+            return;
+        }
+
+        const modal = document.createElement('div');
+        modal.className = 'ar-modal';
+        modal.innerHTML = `
+            <div class="ar-content">
+                <div class="ar-viewer">
+                    <div class="ar-placeholder">
+                        <div class="cake-3d-preview" style="
+                            background: linear-gradient(45deg, ${config.corPrimaria}, ${config.corSecundaria});
+                            width: 200px;
+                            height: 150px;
+                            border-radius: 50%;
+                            margin: 0 auto;
+                            position: relative;
+                            transform: rotateX(60deg) rotateY(20deg);
+                            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                        ">
+                            <div style="
+                                position: absolute;
+                                top: -20px;
+                                left: 50%;
+                                transform: translateX(-50%);
+                                background: ${config.corSecundaria};
+                                width: 180px;
+                                height: 40px;
+                                border-radius: 50%;
+                                box-shadow: inset 0 5px 10px rgba(0,0,0,0.2);
+                            "></div>
+                        </div>
+                        <p>🎂 Visualização 3D do seu bolo</p>
+                        <p><small>Tema: ${config.tema}</small></p>
+                    </div>
+                </div>
+                <div class="ar-controls">
+                    <button onclick="arViewer.closeAR()" class="btn-secondary">Fechar</button>
+                    <button onclick="arViewer.shareAR()" class="btn-primary">Compartilhar</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    showFallback3D(config) {
+        this.showCakeInAR(config);
+    }
+
+    shareAR() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Meu Bolo Personalizado',
+                text: 'Veja como ficou meu bolo da Vera Lúcia Confeitaria!',
+                url: window.location.href
+            });
+        } else {
+            // Fallback para WhatsApp
+            const message = `Olha como ficou meu bolo personalizado da Vera Lúcia Confeitaria! 🎂`;
+            const url = `https://api.whatsapp.com/send/?phone=5519971307912&text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
         }
     }
 
-    openARViewer(cakeConfig) {
-        const modal = document.getElementById('productModal');
-        const content = document.getElementById('modalContent');
-        
-        content.innerHTML = `
-            <h2 class="modal-title">📱 Visualizar em Realidade Aumentada</h2>
-            <p class="modal-description">Veja como seu bolo ficará na sua mesa!</p>
-            
-            <div class="ar-container">
-                ${this.isARSupported ? this.renderARViewer(cakeConfig) : this.renderFallback()}
-            </div>
-            
-            <div class="ar-instructions">
-                <h4>Como usar:</h4>
-                <ol>
-                    <li>📱 Aponte a câmera para uma superfície plana</li>
-                    <li>👆 Toque para posicionar o bolo</li>
-                    <li>🔄 Gire e redimensione como desejar</li>
-                    <li>📸 Tire uma foto para compartilhar</li>
-                </ol>
-            </div>
-        `;
-        
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    renderARViewer(config) {
-        return `
-            <model-viewer
-                id="cake-ar-model"
-                src="${this.generateCakeModel(config)}"
-                ar
-                ar-modes="webxr scene-viewer quick-look"
-                camera-controls
-                poster="images/cake-poster.jpg"
-                shadow-intensity="1"
-                auto-rotate
-                ar-scale="auto">
-                
-                <button slot="ar-button" class="ar-button">
-                    📱 Ver em AR
-                </button>
-                
-                <div class="progress-bar" slot="progress-bar">
-                    <div class="update-bar"></div>
-                </div>
-            </model-viewer>
-        `;
-    }
-
-    renderFallback() {
-        return `
-            <div class="ar-fallback">
-                <div class="fallback-preview">
-                    <img src="images/ar-preview-demo.jpg" alt="Preview AR">
-                    <div class="fallback-overlay">
-                        <h3>📱 AR não disponível</h3>
-                        <p>Seu dispositivo não suporta Realidade Aumentada</p>
-                        <button onclick="arViewer.show3DPreview()" class="preview-btn">
-                            🎯 Ver Preview 3D
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    generateCakeModel(config) {
-        // Gerar modelo 3D baseado na configuração
-        // Por enquanto, usar modelos pré-definidos
-        const modelMap = {
-            'redondo-1': 'models/cake-round-1tier.glb',
-            'redondo-2': 'models/cake-round-2tier.glb',
-            'quadrado-1': 'models/cake-square-1tier.glb',
-            'quadrado-2': 'models/cake-square-2tier.glb'
-        };
-        
-        const key = `${config.formato}-${config.andares}`;
-        return modelMap[key] || 'models/cake-default.glb';
-    }
-
-    show3DPreview() {
-        // Fallback para dispositivos sem AR
-        alert('🎯 Preview 3D será implementado na próxima versão!');
+    closeAR() {
+        const modal = document.querySelector('.ar-modal');
+        if (modal) modal.remove();
     }
 }
 

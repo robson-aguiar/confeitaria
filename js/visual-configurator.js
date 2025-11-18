@@ -169,6 +169,9 @@ class VisualConfigurator {
                         <button onclick="visualConfigurator.open3DView()" class="view-3d-btn" ontouchstart="">
                             🎮 Ver em 3D
                         </button>
+                        <button onclick="visualConfigurator.openARView()" class="ar-btn" ontouchstart="">
+                            📱 Ver em AR
+                        </button>
                     </div>
                 </div>
             </div>
@@ -546,6 +549,14 @@ class VisualConfigurator {
             savedConfigs[configName] = { ...this.config, timestamp: Date.now() };
             localStorage.setItem('savedCakeConfigs', JSON.stringify(savedConfigs));
             alert(`✅ Configuração "${configName}" salva com sucesso!`);
+        }
+    }
+
+    openARView() {
+        if (window.arViewer) {
+            arViewer.showCakeInAR(this.config);
+        } else {
+            alert('AR Viewer não disponível');
         }
     }
 

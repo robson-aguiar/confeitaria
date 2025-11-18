@@ -15,6 +15,52 @@ class VisualConfigurator {
             tema: 'classico'
         };
         
+        this.precos = {
+            base: {
+                pequeno: 45,
+                medio: 65,
+                grande: 85,
+                gigante: 120
+            },
+            andares: {
+                1: 0,
+                2: 25,
+                3: 50,
+                4: 80
+            },
+            massa: {
+                chocolate: 0,
+                baunilha: 0,
+                'red-velvet': 15,
+                limao: 5,
+                morango: 10
+            },
+            recheio: {
+                brigadeiro: 0,
+                nutella: 20,
+                'doce-leite': 10,
+                morango: 8,
+                maracuja: 12
+            },
+            cobertura: {
+                chantilly: 0,
+                buttercream: 15,
+                ganache: 20,
+                fondant: 35
+            },
+            decoracao: {
+                simples: 0,
+                flores: 25,
+                elegante: 40,
+                personagem: 60
+            },
+            formato: {
+                redondo: 0,
+                quadrado: 5,
+                retangular: 10
+            }
+        };
+        
         this.presets = {
             aniversario: {
                 corPrimaria: '#ff69b4',
@@ -66,10 +112,10 @@ class VisualConfigurator {
                     
                     <div class="controls-section">
                         <div class="control-tabs">
-                            <button class="tab-btn active" onclick="showTab('estrutura')">Estrutura</button>
-                            <button class="tab-btn" onclick="showTab('sabores')">Sabores</button>
-                            <button class="tab-btn" onclick="showTab('cores')">Cores</button>
-                            <button class="tab-btn" onclick="showTab('decoracao')">Decoração</button>
+                            <button class="tab-btn active" onclick="showTab('estrutura')" ontouchstart="">Estrutura</button>
+                            <button class="tab-btn" onclick="showTab('sabores')" ontouchstart="">Sabores</button>
+                            <button class="tab-btn" onclick="showTab('cores')" ontouchstart="">Cores</button>
+                            <button class="tab-btn" onclick="showTab('decoracao')" ontouchstart="">Decoração</button>
                         </div>
                         
                         <div class="tab-content">
@@ -95,11 +141,14 @@ class VisualConfigurator {
                         <div id="config-summary">${this.renderSummary()}</div>
                     </div>
                     <div class="action-buttons">
-                        <button onclick="visualConfigurator.saveConfig()" class="save-btn">
-                            💾 Salvar Configuração
+                        <button onclick="visualConfigurator.saveConfig()" class="save-btn" ontouchstart="">
+                            💾 Salvar
                         </button>
-                        <button onclick="visualConfigurator.requestQuote()" class="quote-btn">
-                            📱 Solicitar Orçamento
+                        <button onclick="visualConfigurator.requestQuote()" class="quote-btn" ontouchstart="">
+                            📱 Orçamento
+                        </button>
+                        <button onclick="visualConfigurator.open3DView()" class="view-3d-btn" ontouchstart="">
+                            🎮 Ver em 3D
                         </button>
                     </div>
                 </div>
@@ -108,29 +157,77 @@ class VisualConfigurator {
         
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        
+        // Adicionar suporte a swipe em mobile
+        this.addMobileGestures();
+    }
+
+    addMobileGestures() {
+        if (window.innerWidth <= 768) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            let currentTab = 0;
+            
+            // Swipe entre tabs
+            const tabContent = document.querySelector('.tab-content');
+            let startX = 0;
+            
+            tabContent.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            });
+            
+            tabContent.addEventListener('touchend', (e) => {
+                const endX = e.changedTouches[0].clientX;
+                const diff = startX - endX;
+                
+                if (Math.abs(diff) > 50) { // Mínimo 50px para swipe
+                    if (diff > 0 && currentTab < tabs.length - 1) {
+                        // Swipe left - próxima tab
+                        currentTab++;
+                        tabs[currentTab].click();
+                    } else if (diff < 0 && currentTab > 0) {
+                        // Swipe right - tab anterior
+                        currentTab--;
+                        tabs[currentTab].click();
+                    }
+                }
+            });
+        }
     }
 
     renderCakePreview() {
-        const { formato, andares, corPrimaria, corSecundaria, decoracao } = this.config;
+        const { formato, andares, corPrimaria, corSecundaria, decoracao, tamanho } = this.config;
         
         return `
             <div class="cake-container">
-                <div class="cake-base ${formato}" style="--cor-primaria: ${corPrimaria}; --cor-secundaria: ${corSecundaria};">
+                <div class="cake-base ${formato} ${tamanho}" style="--cor-primaria: ${corPrimaria}; --cor-secundaria: ${corSecundaria};">
                     ${this.renderAndares()}
-                    ${this.renderDecoracao()}
+                    ${this.renderDecoracaoVisual()}
                 </div>
                 <div class="cake-shadow"></div>
+                <div class="cake-info">
+                    <span class="cake-label">${this.getCakeDescription()}</span>
+                </div>
             </div>
         `;
     }
 
     renderAndares() {
         let andaresHtml = '';
+        const baseSize = this.config.tamanho === 'pequeno' ? 80 : 
+                        this.config.tamanho === 'medio' ? 100 : 
+                        this.config.tamanho === 'grande' ? 120 : 140;
+        
         for (let i = 0; i < this.config.andares; i++) {
-            const size = 100 - (i * 20);
+            const size = baseSize - (i * 25);
+            const height = 50 + (this.config.andares > 2 ? 10 : 0);
             andaresHtml += `
-                <div class="andar andar-${i + 1}" style="width: ${size}%; height: 60px; z-index: ${10 - i};">
-                    <div class="andar-base"></div>
+                <div class="andar andar-${i + 1}" style="
+                    width: ${size}px; 
+                    height: ${height}px; 
+                    bottom: ${i * (height - 5)}px;
+                    z-index: ${10 - i};
+                    background: linear-gradient(135deg, ${this.config.corPrimaria}, ${this.config.corSecundaria});
+                ">
                     <div class="andar-topo"></div>
                 </div>
             `;
@@ -138,17 +235,62 @@ class VisualConfigurator {
         return andaresHtml;
     }
 
-    renderDecoracao() {
-        const { decoracao, corSecundaria } = this.config;
+    renderDecoracaoVisual() {
+        const { decoracao } = this.config;
         
         const decoracoes = {
-            simples: '',
-            flores: `<div class="flores">🌸🌺🌸</div>`,
-            elegante: `<div class="elegante">✨💎✨</div>`,
-            personagem: `<div class="personagem">🎭🎪🎨</div>`
+            simples: '<div class="decoracao-simples" style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-size: 12px;">✨</div>',
+            flores: '<div class="decoracao-flores" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 16px;">🌸🌺🌸</div>',
+            elegante: '<div class="decoracao-elegante" style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); font-size: 14px;">✨💎✨</div>',
+            personagem: '<div class="decoracao-personagem" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 16px;">🎭🎪🎨</div>'
         };
         
         return decoracoes[decoracao] || '';
+    }
+
+    calculatePrice() {
+        const { tamanho, andares, massa, recheio, cobertura, decoracao, formato } = this.config;
+        
+        let preco = this.precos.base[tamanho] || 65;
+        preco += this.precos.andares[andares] || 0;
+        preco += this.precos.massa[massa] || 0;
+        preco += this.precos.recheio[recheio] || 0;
+        preco += this.precos.cobertura[cobertura] || 0;
+        preco += this.precos.decoracao[decoracao] || 0;
+        preco += this.precos.formato[formato] || 0;
+        
+        return preco;
+    }
+
+    validateConfig() {
+        const errors = [];
+        
+        // Validar combinações problemáticas
+        if (this.config.andares > 3 && this.config.tamanho === 'pequeno') {
+            errors.push('Bolos pequenos não suportam mais de 3 andares');
+        }
+        
+        if (this.config.cobertura === 'fondant' && this.config.decoracao === 'flores') {
+            errors.push('Fondant não combina bem com decoração de flores naturais');
+        }
+        
+        if (this.config.andares > 2 && this.config.formato === 'retangular') {
+            errors.push('Formato retangular recomendado para até 2 andares');
+        }
+        
+        return errors;
+    }
+
+    getEstimatedWeight() {
+        const baseWeights = {
+            pequeno: 1.5,
+            medio: 3,
+            grande: 5,
+            gigante: 8
+        };
+        
+        const weight = baseWeights[this.config.tamanho] * this.config.andares;
+        return Math.round(weight * 10) / 10; // Arredondar para 1 casa decimal
     }
 
     renderEstrutura() {
@@ -294,6 +436,10 @@ class VisualConfigurator {
     }
 
     renderSummary() {
+        const preco = this.calculatePrice();
+        const peso = this.getEstimatedWeight();
+        const errors = this.validateConfig();
+        
         return `
             <div class="summary-grid">
                 <div class="summary-item">
@@ -303,7 +449,7 @@ class VisualConfigurator {
                     <strong>Andares:</strong> ${this.config.andares}
                 </div>
                 <div class="summary-item">
-                    <strong>Tamanho:</strong> ${this.config.tamanho}
+                    <strong>Peso:</strong> ~${peso}kg
                 </div>
                 <div class="summary-item">
                     <strong>Massa:</strong> ${this.config.massa}
@@ -315,7 +461,23 @@ class VisualConfigurator {
                     <strong>Decoração:</strong> ${this.config.decoracao}
                 </div>
             </div>
+            <div class="price-section">
+                <div class="estimated-price">
+                    <strong>Preço Estimado: R$ ${preco.toFixed(2)}</strong>
+                    <small>*Valor pode variar conforme complexidade</small>
+                </div>
+            </div>
+            ${errors.length > 0 ? `
+                <div class="validation-errors">
+                    <h5>⚠️ Atenção:</h5>
+                    ${errors.map(error => `<p class="error-item">• ${error}</p>`).join('')}
+                </div>
+            ` : ''}
         `;
+    }
+
+    getCakeDescription() {
+        return `${this.config.formato} • ${this.config.andares} andar${this.config.andares > 1 ? 'es' : ''} • ${this.config.tamanho}`;
     }
 
     updateConfig(key, value) {
@@ -365,18 +527,62 @@ class VisualConfigurator {
         }
     }
 
-    requestQuote() {
+    open3DView() {
+        const modal = document.getElementById('productModal');
+        const content = document.getElementById('modalContent');
+        
+        content.innerHTML = `
+            <h2 class="modal-title">🎮 Visualização 3D Gratuita</h2>
+            <p class="modal-description">Veja seu bolo em 3D - 100% gratuito e funcional!</p>
+            
+            ${free3DFixed.create3DViewer(this.config)}
+            
+            <div style="text-align: center; margin-top: 15px;">
+                <small style="color: #666;">
+                    💡 Use os controles acima para alternar entre visualizações CSS 3D e Canvas 2D
+                </small>
+            </div>
+        `;
+        
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Garantir que a configuração seja aplicada
+        setTimeout(() => {
+            free3DFixed.updateConfig(this.config);
+        }, 200);
+    }
+
+    sync3DConfig() {
+        if (window.free3DFixed) {
+            free3DFixed.updateConfig(this.config);
+        }
+    }
+        const preco = this.calculatePrice();
+        const peso = this.getEstimatedWeight();
+        const errors = this.validateConfig();
+        
         let message = `🎨 *ORÇAMENTO - CONFIGURADOR VISUAL*\n\n`;
         message += `📋 *Configuração do Bolo:*\n`;
         message += `• Formato: ${this.config.formato}\n`;
         message += `• Andares: ${this.config.andares}\n`;
         message += `• Tamanho: ${this.config.tamanho}\n`;
+        message += `• Peso estimado: ~${peso}kg\n`;
         message += `• Massa: ${this.config.massa}\n`;
         message += `• Recheio: ${this.config.recheio}\n`;
         message += `• Cobertura: ${this.config.cobertura}\n`;
         message += `• Decoração: ${this.config.decoracao}\n`;
         message += `• Cores: ${this.config.corPrimaria} / ${this.config.corSecundaria}\n\n`;
-        message += `Gostaria de um orçamento para esta configuração! 😊`;
+        message += `💰 *Preço Estimado: R$ ${preco.toFixed(2)}*\n`;
+        message += `*(Valor final pode variar conforme complexidade)*\n\n`;
+        
+        if (errors.length > 0) {
+            message += `⚠️ *Observações:*\n`;
+            errors.forEach(error => message += `• ${error}\n`);
+            message += `\n`;
+        }
+        
+        message += `Gostaria de confirmar este orçamento! 😊`;
         
         const whatsappUrl = `https://api.whatsapp.com/send/?phone=5519971307912&text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');

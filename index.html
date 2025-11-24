@@ -105,8 +105,8 @@
     <noscript><link rel="stylesheet" href="css/style.css"></noscript>
     <noscript><link rel="stylesheet" href="css/mobile.css"></noscript>
     <link rel="preload" href="js/script.js" as="script">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"></noscript>
     
     <!-- Critical CSS Inline -->
     <style>
@@ -207,16 +207,25 @@
     </nav>
 
     <!-- Hero Full-Screen -->
+    <!-- Hero Full-Screen Cinematic -->
     <section id="home" class="hero-section parallax-section">
-        <div class="hero-content">
-            <h1 class="hero-title">Sabor que<br>transforma momentos</h1>
-            <p class="hero-subtitle">Bolos decorados | Bolos caseirinhos | Pães artesanais</p>
-            <a href="javascript:void(0)" class="hero-cta" onclick="openCakeBuilder()">
-                Monte seu bolo personalizado
-            </a>
+        <div class="hero-overlay"></div>
+        <div class="hero-content fade-in visible">
+            <span class="hero-badge">Artesanal & Premium</span>
+            <h1 class="hero-title">A Arte da<br>Confeitaria Fina</h1>
+            <p class="hero-subtitle">Transformando ingredientes nobres em momentos inesquecíveis.</p>
+            <div class="hero-actions">
+                <a href="javascript:void(0)" class="hero-cta btn-primary" onclick="openCakeBuilder()">
+                    Criar meu Bolo
+                </a>
+                <a href="#bolos-decorados" class="hero-cta btn-outline">
+                    Ver Coleção
+                </a>
+            </div>
         </div>
         <div class="hero-image">
-            <img src="images/downloadgram.org_537499987_17954578145989810_7172687175539727990_n.jpg" alt="Bolo artesanal" width="1080" height="1080">
+            <!-- Placeholder for cinematic video or high-res image -->
+            <img src="images/downloadgram.org_537499987_17954578145989810_7172687175539727990_n.jpg" alt="Bolo artesanal premium" class="hero-bg-img">
         </div>
     </section>
 

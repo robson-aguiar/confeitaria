@@ -13,7 +13,7 @@
 2. Em "Configurações Básicas":
    - **Valid OAuth Redirect URIs**: `https://veralucia-confeitaria.azurewebsites.net/`
    - **Deauthorize Callback URL**: `https://veralucia-confeitaria.azurewebsites.net/`
-   - **Data Deletion Request URL**: `https://veralucia-confeitaria.azurewebsites.net/`
+   - **Data Deletion Request URL**: `https://veralucia-confria.azurewebsites.net/`
 
 ### 3. Criar Instagram Tester
 1. Vá em "Funções" > "Funções"

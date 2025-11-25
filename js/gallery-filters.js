@@ -8,35 +8,35 @@ const GALLERY_DATA = [
     { src: "images/IMG-20251013-WA0016.jpg", category: "bolos", occasion: "aniversario", colors: ["chocolate"], tags: ["simples", "caseiro"], price: 80, complexity: "baixa" },
     { src: "images/IMG-20251013-WA0020.jpg", category: "bolos", occasion: "aniversario", colors: ["rosa", "dourado"], tags: ["elegante", "flores"], price: 140, complexity: "media" },
     { src: "images/IMG-20251013-WA0025.jpg", category: "bolos", occasion: "aniversario", colors: ["branco", "azul"], tags: ["masculino", "esporte"], price: 110, complexity: "media" },
-    
+
     // Bolos Decorados - Casamentos
     { src: "images/IMG-20251013-WA0030.jpg", category: "bolos", occasion: "casamento", colors: ["branco", "dourado"], tags: ["elegante", "flores", "luxo"], price: 250, complexity: "alta" },
     { src: "images/IMG-20251013-WA0038.jpg", category: "bolos", occasion: "casamento", colors: ["branco", "rosa"], tags: ["romantico", "flores"], price: 200, complexity: "media" },
     { src: "images/IMG-20251013-WA0043.jpg", category: "bolos", occasion: "casamento", colors: ["branco"], tags: ["minimalista", "elegante"], price: 180, complexity: "media" },
     { src: "images/IMG-20251013-WA0048.jpg", category: "bolos", occasion: "casamento", colors: ["branco", "verde"], tags: ["natural", "flores"], price: 220, complexity: "alta" },
-    
+
     // Bolos Decorados - Formaturas
     { src: "images/IMG-20251013-WA0055.jpg", category: "bolos", occasion: "formatura", colors: ["azul", "dourado"], tags: ["diploma", "elegante"], price: 160, complexity: "media" },
     { src: "images/IMG-20251013-WA0063.jpg", category: "bolos", occasion: "formatura", colors: ["preto", "dourado"], tags: ["formal", "luxo"], price: 170, complexity: "media" },
-    
+
     // Bolos Decorados - Batizados
     { src: "images/IMG-20251013-WA0070.jpg", category: "bolos", occasion: "batizado", colors: ["branco", "azul"], tags: ["religioso", "delicado"], price: 130, complexity: "media" },
     { src: "images/IMG-20251013-WA0075.jpg", category: "bolos", occasion: "batizado", colors: ["branco", "rosa"], tags: ["religioso", "delicado"], price: 130, complexity: "media" },
-    
+
     // Bolos Decorados - Diversos
     { src: "images/IMG-20251013-WA0115.jpg", category: "bolos", occasion: "aniversario", colors: ["rosa", "branco"], tags: ["elegante", "flores"], price: 135, complexity: "media" },
     { src: "images/IMG-20251013-WA0120.jpg", category: "bolos", occasion: "aniversario", colors: ["colorido"], tags: ["festa", "alegre"], price: 145, complexity: "media" },
     { src: "images/IMG-20251013-WA0125.jpg", category: "bolos", occasion: "aniversario", colors: ["azul", "branco"], tags: ["decorado", "especial"], price: 155, complexity: "media" },
-    
+
     // Bolos Caseirinhos
     { src: "images/optimized/downloadgram.org_457383571_506368645434009_3148807429923215423_n.webp", category: "caseirinhos", occasion: "casa", colors: ["chocolate"], tags: ["simples", "gostoso"], price: 45, complexity: "baixa" },
     { src: "images/optimized/downloadgram.org_457503858_483408134487583_8024968526927135757_n (1).webp", category: "caseirinhos", occasion: "casa", colors: ["baunilha"], tags: ["tradicional"], price: 40, complexity: "baixa" },
     { src: "images/optimized/downloadgram.org_457522063_866805058333348_7268343729862773615_n.webp", category: "caseirinhos", occasion: "casa", colors: ["cenoura"], tags: ["caseiro", "saudavel"], price: 50, complexity: "baixa" },
-    
+
     // Pães
     { src: "images/pao.jpg", category: "paes", occasion: "casa", colors: ["dourado"], tags: ["artesanal", "fresco"], price: 25, complexity: "baixa" },
     { src: "images/IMG-20251013-WA0008.jpg", category: "paes", occasion: "casa", colors: ["dourado"], tags: ["tradicional", "caseiro"], price: 20, complexity: "baixa" },
-    
+
     // Doces
     { src: "images/IMG-20251013-WA0003.jpg", category: "doces", occasion: "festa", colors: ["colorido"], tags: ["festa", "variados"], price: 60, complexity: "media" }
 ];
@@ -58,17 +58,17 @@ class GalleryFilters {
 
     init() {
         console.log('🔧 Executando init() da galeria...');
-        
+
         try {
             console.log('📋 Renderizando filtros...');
             this.renderFilters();
-            
+
             console.log('🖼️ Renderizando galeria...');
             this.renderGallery();
-            
+
             console.log('🔍 Configurando busca...');
             this.setupSearch();
-            
+
             console.log('✅ Init da galeria concluído com sucesso');
         } catch (error) {
             console.error('❌ Erro durante init da galeria:', error);
@@ -77,7 +77,7 @@ class GalleryFilters {
 
     renderFilters() {
         const filtersContainer = document.querySelector('.gallery-filters');
-        
+
         filtersContainer.innerHTML = `
             <div class="filter-row">
                 <div class="filter-group">
@@ -169,45 +169,45 @@ class GalleryFilters {
             if (this.currentFilters.category !== 'all' && item.category !== this.currentFilters.category) {
                 return false;
             }
-            
+
             // Filtro por ocasião
             if (this.currentFilters.occasion !== 'all' && item.occasion !== this.currentFilters.occasion) {
                 return false;
             }
-            
+
             // Filtro por cor
             if (this.currentFilters.color !== 'all' && !item.colors.includes(this.currentFilters.color)) {
                 return false;
             }
-            
+
             // Filtro por faixa de preço
             if (this.currentFilters.priceRange !== 'all') {
                 const price = item.price || 0;
                 const range = this.currentFilters.priceRange;
-                
+
                 if (range === '0-50' && price > 50) return false;
                 if (range === '51-100' && (price < 51 || price > 100)) return false;
                 if (range === '101-150' && (price < 101 || price > 150)) return false;
                 if (range === '151-200' && (price < 151 || price > 200)) return false;
                 if (range === '201+' && price < 201) return false;
             }
-            
+
             // Filtro por complexidade
             if (this.currentFilters.complexity !== 'all' && item.complexity !== this.currentFilters.complexity) {
                 return false;
             }
-            
+
             // Filtro por busca
             if (this.currentFilters.search) {
                 const searchTerms = this.currentFilters.search.split(' ');
                 const itemText = [...item.tags, item.category, item.occasion, ...item.colors].join(' ').toLowerCase();
-                
+
                 return searchTerms.every(term => itemText.includes(term));
             }
-            
+
             return true;
         });
-        
+
         this.currentPage = 1;
         this.renderGallery();
         this.updateResultsCount();
@@ -215,21 +215,21 @@ class GalleryFilters {
 
     renderGallery() {
         console.log('🎨 Iniciando renderGallery...');
-        
+
         const galleryGrid = document.querySelector('.gallery-grid');
         if (!galleryGrid) {
             console.error('❌ .gallery-grid não encontrado');
             return;
         }
-        
+
         console.log(`📊 Itens filtrados: ${this.filteredItems.length}`);
-        
+
         const startIndex = (this.currentPage - 1) * this.itemsPerPage;
         const endIndex = startIndex + this.itemsPerPage;
         const itemsToShow = this.filteredItems.slice(startIndex, endIndex);
-        
+
         console.log(`📄 Página ${this.currentPage}: mostrando ${itemsToShow.length} itens`);
-        
+
         if (itemsToShow.length === 0) {
             console.log('⚠️ Nenhum item para mostrar');
             galleryGrid.innerHTML = `
@@ -241,7 +241,7 @@ class GalleryFilters {
             `;
             return;
         }
-        
+
         galleryGrid.innerHTML = itemsToShow.map(item => `
             <div class="gallery-item" data-category="${item.category}" data-occasion="${item.occasion}">
                 <img data-src="${item.src}" alt="${this.getAltText(item)}" 
@@ -257,7 +257,7 @@ class GalleryFilters {
                 </div>
             </div>
         `).join('');
-        
+
         this.renderPagination();
         this.animateItems();
         this.initLazyLoading();
@@ -265,7 +265,7 @@ class GalleryFilters {
 
     initLazyLoading() {
         const lazyImages = document.querySelectorAll('.lazy-image');
-        
+
         if ('IntersectionObserver' in window) {
             const imageObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -291,28 +291,28 @@ class GalleryFilters {
         if (!src) return;
 
         const newImg = new Image();
-        
+
         newImg.onload = () => {
             img.src = src;
             img.classList.add('loaded');
             img.removeAttribute('data-src');
         };
-        
+
         newImg.onerror = () => {
             img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbSBuw6NvIGVuY29udHJhZGE8L3RleHQ+PC9zdmc+';
             img.classList.add('error');
         };
-        
+
         newImg.src = src;
     }
-    }
+
 
     renderPagination() {
         const totalPages = Math.ceil(this.filteredItems.length / this.itemsPerPage);
         if (totalPages <= 1) return;
-        
+
         const paginationContainer = document.querySelector('.gallery-pagination') || this.createPaginationContainer();
-        
+
         let pagination = '';
         for (let i = 1; i <= totalPages; i++) {
             pagination += `
@@ -322,7 +322,7 @@ class GalleryFilters {
                 </button>
             `;
         }
-        
+
         paginationContainer.innerHTML = pagination;
     }
 
@@ -342,18 +342,18 @@ class GalleryFilters {
     updateActiveFilters() {
         const container = document.getElementById('active-filters');
         const activeFilters = [];
-        
+
         Object.entries(this.currentFilters).forEach(([key, value]) => {
             if (value !== 'all' && value !== '') {
                 activeFilters.push({ key, value });
             }
         });
-        
+
         if (activeFilters.length === 0) {
             container.innerHTML = '';
             return;
         }
-        
+
         container.innerHTML = `
             <div class="active-filters-list">
                 <span>Filtros ativos:</span>
@@ -370,11 +370,11 @@ class GalleryFilters {
     updateResultsCount() {
         const existingCount = document.querySelector('.results-count');
         if (existingCount) existingCount.remove();
-        
+
         const count = document.createElement('div');
         count.className = 'results-count';
         count.innerHTML = `📊 ${this.filteredItems.length} resultado${this.filteredItems.length !== 1 ? 's' : ''} encontrado${this.filteredItems.length !== 1 ? 's' : ''}`;
-        
+
         document.querySelector('.gallery-filters').appendChild(count);
     }
 
@@ -397,7 +397,7 @@ class GalleryFilters {
             complexity: 'all',
             search: ''
         };
-        
+
         // Resetar selects
         document.getElementById('category-filter').value = 'all';
         document.getElementById('occasion-filter').value = 'all';
@@ -409,7 +409,7 @@ class GalleryFilters {
             document.getElementById('complexity-filter').value = 'all';
         }
         document.getElementById('gallery-search').value = '';
-        
+
         this.applyFilters();
         this.updateActiveFilters();
     }
@@ -421,7 +421,7 @@ class GalleryFilters {
             paes: 'Pães Artesanais',
             doces: 'Doces'
         };
-        
+
         const occasionNames = {
             aniversario: 'Aniversário',
             casamento: 'Casamento',
@@ -430,7 +430,7 @@ class GalleryFilters {
             casa: 'Casa',
             festa: 'Festa'
         };
-        
+
         return `${categoryNames[item.category]} - ${occasionNames[item.occasion]}`;
     }
 
@@ -449,7 +449,7 @@ class GalleryFilters {
         items.forEach((item, index) => {
             item.style.opacity = '0';
             item.style.transform = 'translateY(20px)';
-            
+
             setTimeout(() => {
                 item.style.transition = 'all 0.3s ease';
                 item.style.opacity = '1';
@@ -461,7 +461,7 @@ class GalleryFilters {
     setupSearch() {
         const searchInput = document.getElementById('gallery-search');
         let searchTimeout;
-        
+
         searchInput.addEventListener('input', (e) => {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(() => {
@@ -475,7 +475,7 @@ class GalleryFilters {
 function openImageModal(src, alt) {
     const modal = document.getElementById('productModal');
     const content = document.getElementById('modalContent');
-    
+
     content.innerHTML = `
         <div class="image-modal">
             <img src="${src}" alt="${alt}" style="max-width: 100%; max-height: 80vh; border-radius: 8px;">
@@ -487,7 +487,7 @@ function openImageModal(src, alt) {
             </div>
         </div>
     `;
-    
+
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -498,39 +498,25 @@ function requestSimilar(imageSrc, imageAlt) {
         requestSimilarQuote(imageSrc, imageAlt);
     } else {
         // Fallback caso a função não esteja disponível
-        const imageUrl = imageSrc.startsWith('http') ? 
-            imageSrc : 
+        const imageUrl = imageSrc.startsWith('http') ?
+            imageSrc :
             `${window.location.origin}/${imageSrc}`;
-            
+
         const message = `🎂 *SOLICITAÇÃO DE ORÇAMENTO SIMILAR*\n\n` +
-                       `Olá! Vi esta foto na galeria do site e gostaria de um orçamento para algo similar:\n\n` +
-                       `📸 *Imagem de referência:*\n` +
-                       `• ${imageAlt}\n` +
-                       `• Ver imagem: ${imageUrl}\n\n` +
-                       `Podem me ajudar com um orçamento? 😊`;
-        
+            `Olá! Vi esta foto na galeria do site e gostaria de um orçamento para algo similar:\n\n` +
+            `📸 *Imagem de referência:*\n` +
+            `• ${imageAlt}\n` +
+            `• Ver imagem: ${imageUrl}\n\n` +
+            `Podem me ajudar com um orçamento? 😊`;
+
         const whatsappUrl = `https://api.whatsapp.com/send/?phone=5519971307912&text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
     }
 }
 
-    updateResultsCount() {
-        const totalResults = this.filteredItems.length;
-        const startIndex = (this.currentPage - 1) * this.itemsPerPage + 1;
-        const endIndex = Math.min(this.currentPage * this.itemsPerPage, totalResults);
-        
-        // Atualizar contador se existir
-        const countElement = document.querySelector('.results-info');
-        if (countElement) {
-            if (totalResults === 0) {
-                countElement.textContent = 'Nenhum resultado encontrado';
-            } else {
-                countElement.textContent = `Mostrando ${startIndex}-${endIndex} de ${totalResults} resultados`;
-            }
-        }
-    }
 
-    // Instância global
+
+// Instância global
 window.galleryFilters = new GalleryFilters();
 
 // Performance optimizations
@@ -566,11 +552,11 @@ class GalleryPerformance {
     static preloadNextPage() {
         const gallery = window.galleryFilters;
         if (!gallery) return;
-        
+
         const nextPageStart = gallery.currentPage * gallery.itemsPerPage;
         const nextPageEnd = nextPageStart + gallery.itemsPerPage;
         const nextPageItems = gallery.filteredItems.slice(nextPageStart, nextPageEnd);
-        
+
         nextPageItems.forEach(item => {
             const img = new Image();
             img.src = item.src;
@@ -586,27 +572,27 @@ document.addEventListener('DOMContentLoaded', () => {
 // Inicializar quando a página carregar
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🎯 Inicializando galeria...');
-    
+
     const gallerySection = document.querySelector('.gallery-section');
     if (!gallerySection) {
         console.error('❌ Seção da galeria não encontrada');
         return;
     }
-    
+
     const galleryGrid = document.querySelector('.gallery-grid');
     if (!galleryGrid) {
         console.error('❌ Grid da galeria não encontrado');
         return;
     }
-    
+
     const galleryFiltersContainer = document.querySelector('.gallery-filters');
     if (!galleryFiltersContainer) {
         console.error('❌ Container de filtros não encontrado');
         return;
     }
-    
+
     console.log('✅ Elementos da galeria encontrados, inicializando...');
-    
+
     try {
         if (window.galleryFilters) {
             galleryFilters.init();

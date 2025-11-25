@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#007AFF">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="description" content="Vera Lúcia Confeitaria em Campinas - Bolos decorados personalizados, bolos caseirinhos e pães artesanais. Configurador online, entrega rápida. ⭐ 5 estrelas no Google">
+    <meta name="description"
+        content="Vera Lúcia Confeitaria em Campinas - Bolos decorados personalizados, bolos caseirinhos e pães artesanais. Configurador online, entrega rápida. ⭐ 5 estrelas no Google">
     <title>Vera Lúcia Confeitaria Campinas - Bolos Decorados Personalizados | Entrega Rápida</title>
-    
+
     <!-- SEO Meta Tags -->
-    <meta name="keywords" content="confeitaria campinas, bolos decorados, bolos personalizados, bolos caseirinhos, pães artesanais, vera lucia confeitaria">
+    <meta name="keywords"
+        content="confeitaria campinas, bolos decorados, bolos personalizados, bolos caseirinhos, pães artesanais, vera lucia confeitaria">
     <meta name="author" content="Vera Lúcia Confeitaria">
     <meta name="robots" content="index, follow">
     <meta name="google-site-verification" content="LnfJyp29sX3NqjUi1seQgamot3xvcAcpUM2ns2-kwr8">
     <link rel="canonical" href="https://app-veralucia-confeitaria.azurewebsites.net/">
-    
+
     <!-- Open Graph -->
     <meta property="og:title" content="Vera Lúcia Confeitaria - Bolos Decorados Personalizados">
-    <meta property="og:description" content="Transforme momentos especiais com nossos bolos artesanais. Configurador online, 17 massas, 28 recheios. Entrega em Campinas e região.">
+    <meta property="og:description"
+        content="Transforme momentos especiais com nossos bolos artesanais. Configurador online, 17 massas, 28 recheios. Entrega em Campinas e região.">
     <meta property="og:image" content="https://app-veralucia-confeitaria.azurewebsites.net/images/og-image.jpg">
     <meta property="og:url" content="https://app-veralucia-confeitaria.azurewebsites.net/">
     <meta property="og:type" content="business.business">
     <meta property="og:locale" content="pt_BR">
-    
+
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Vera Lúcia Confeitaria - Bolos Decorados">
-    <meta name="twitter:description" content="Bolos artesanais personalizados em Campinas. Configure online seu bolo dos sonhos!">
+    <meta name="twitter:description"
+        content="Bolos artesanais personalizados em Campinas. Configure online seu bolo dos sonhos!">
     <meta name="twitter:image" content="https://app-veralucia-confeitaria.azurewebsites.net/images/og-image.jpg">
-    
+
     <!-- Schema.org LocalBusiness -->
     <script type="application/ld+json">
     {
@@ -82,7 +87,7 @@
       ]
     }
     </script>
-    
+
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
@@ -91,72 +96,375 @@
     <meta name="apple-mobile-web-app-title" content="Vera Lúcia">
     <meta name="msapplication-TileColor" content="#007aff">
     <meta name="theme-color" content="#007aff">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="alternate icon" href="favicon.ico">
-    
+
     <!-- Image Optimization -->
     <meta name="format-detection" content="telephone=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!-- Preload Critical Resources -->
     <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="preload" href="css/mobile.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="css/style.css"></noscript>
-    <noscript><link rel="stylesheet" href="css/mobile.css"></noscript>
+    <noscript>
+        <link rel="stylesheet" href="css/style.css">
+    </noscript>
+    <noscript>
+        <link rel="stylesheet" href="css/mobile.css">
+    </noscript>
     <link rel="preload" href="js/script.js" as="script">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"></noscript>
-    
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap">
+    </noscript>
+
     <!-- Critical CSS Inline -->
     <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    :root{--black:#000;--white:#fff;--gray:#86868b;--light-gray:#f5f5f7;--bg-primary:#fff;--bg-secondary:#f5f5f7;--text-primary:#000;--text-secondary:#86868b;--border-color:rgba(0,0,0,.1)}
-    .dark-mode{--bg-primary:#1a1a1a;--bg-secondary:#2a2a2a;--text-primary:#fff;--text-secondary:#a0a0a0;--border-color:rgba(255,255,255,.1)}
-    .points-badge{background:var(--bg-secondary);border:1px solid var(--border-color);border-radius:20px;padding:8px 12px;margin-right:10px;display:flex;align-items:center;gap:5px;font-size:14px;cursor:pointer;transition:all 0.3s ease}
-    .points-badge:hover{background:var(--text-primary);color:var(--bg-primary)}
-    .loyalty-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:2000}
-    .loyalty-modal-content{background:var(--bg-primary);padding:2rem;border-radius:12px;max-width:400px;width:90%;text-align:center}
-    .loyalty-modal-content h3{margin-bottom:1rem;color:var(--text-primary)}
-    .loyalty-modal-content input{width:100%;padding:12px;margin:8px 0;border:1px solid var(--border-color);border-radius:8px;background:var(--bg-secondary)}
-    .loyalty-actions{display:flex;gap:10px;margin-top:1rem}
-    .loyalty-actions button{flex:1;padding:12px;border:none;border-radius:8px;cursor:pointer;font-weight:500}
-    .btn-primary{background:#007AFF;color:white}
-    .btn-secondary{background:var(--bg-secondary);color:var(--text-primary)}
-    .points-notification{position:fixed;top:100px;right:20px;background:#34C759;color:white;padding:12px 20px;border-radius:8px;z-index:2000;animation:slideIn 0.3s ease}
-    .instagram-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
-    .instagram-header h3{color:var(--text-primary);margin:0}
-    .follow-btn{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:white;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:14px;font-weight:500}
-    .instagram-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
-    .instagram-post{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;transition:transform 0.3s ease}
-    .instagram-post:hover{transform:scale(1.05)}
-    .instagram-post img{width:100%;height:100%;object-fit:cover}
-    .post-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.8));color:white;padding:10px;font-size:12px;opacity:0;transition:opacity 0.3s ease}
-    .instagram-post:hover .post-overlay{opacity:1}
-    .loading{text-align:center;padding:2rem;color:var(--text-secondary)}
-    .ar-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:2000}
-    .ar-content{background:var(--bg-primary);padding:2rem;border-radius:12px;max-width:400px;width:90%;text-align:center}
-    .ar-viewer{margin:1rem 0}
-    .ar-controls{display:flex;gap:10px;margin-top:1rem}
-    .ar-controls button{flex:1;padding:12px;border:none;border-radius:8px;cursor:pointer;font-weight:500}
-    @keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
-    html{scroll-behavior:smooth}
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:var(--text-primary);background:var(--bg-primary);overflow-x:hidden}
-    .navbar{position:fixed;top:0;width:100%;background:rgba(255,255,255,.8);backdrop-filter:blur(20px);z-index:1000;border-bottom:1px solid rgba(0,0,0,.1)}
-    .nav-container{max-width:1200px;margin:0 auto;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
-    .nav-logo{font-size:1.5rem;font-weight:600;color:var(--black);text-decoration:none;letter-spacing:-.5px}
-    .nav-menu{display:flex;list-style:none;gap:3rem}
-    .nav-menu a{color:var(--black);text-decoration:none;font-size:.875rem;font-weight:400;transition:opacity .3s}
-    .hero-section{height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:var(--black)}
-    .hero-content{text-align:center;color:var(--white);z-index:2;max-width:800px;padding:0 2rem}
-    .hero-title{font-size:clamp(2.5rem,8vw,6rem);font-weight:700;margin-bottom:1.5rem;letter-spacing:-2px}
-    .hero-subtitle{font-size:clamp(1.125rem,3vw,1.5rem);font-weight:300;margin-bottom:3rem;opacity:.9}
-    .hero-cta{display:inline-block;background:var(--white);color:var(--black);padding:1rem 2.5rem;border-radius:50px;text-decoration:none;font-weight:500;font-size:1.125rem;transition:all .3s ease;border:2px solid transparent}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --black: #000;
+            --white: #fff;
+            --gray: #86868b;
+            --light-gray: #f5f5f7;
+            --bg-primary: #fff;
+            --bg-secondary: #f5f5f7;
+            --text-primary: #000;
+            --text-secondary: #86868b;
+            --border-color: rgba(0, 0, 0, .1)
+        }
+
+        .dark-mode {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2a2a2a;
+            --text-primary: #fff;
+            --text-secondary: #a0a0a0;
+            --border-color: rgba(255, 255, 255, .1)
+        }
+
+        .points-badge {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 8px 12px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease
+        }
+
+        .points-badge:hover {
+            background: var(--text-primary);
+            color: var(--bg-primary)
+        }
+
+        .loyalty-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000
+        }
+
+        .loyalty-modal-content {
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center
+        }
+
+        .loyalty-modal-content h3 {
+            margin-bottom: 1rem;
+            color: var(--text-primary)
+        }
+
+        .loyalty-modal-content input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-secondary)
+        }
+
+        .loyalty-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem
+        }
+
+        .loyalty-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500
+        }
+
+        .btn-primary {
+            background: #007AFF;
+            color: white
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary)
+        }
+
+        .points-notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: #34C759;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            z-index: 2000;
+            animation: slideIn 0.3s ease
+        }
+
+        .instagram-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem
+        }
+
+        .instagram-header h3 {
+            color: var(--text-primary);
+            margin: 0
+        }
+
+        .follow-btn {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500
+        }
+
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px
+        }
+
+        .instagram-post {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease
+        }
+
+        .instagram-post:hover {
+            transform: scale(1.05)
+        }
+
+        .instagram-post img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover
+        }
+
+        .post-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            padding: 10px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease
+        }
+
+        .instagram-post:hover .post-overlay {
+            opacity: 1
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary)
+        }
+
+        .ar-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000
+        }
+
+        .ar-content {
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center
+        }
+
+        .ar-viewer {
+            margin: 1rem 0
+        }
+
+        .ar-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem
+        }
+
+        .ar-controls button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%)
+            }
+
+            to {
+                transform: translateX(0)
+            }
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            overflow-x: hidden
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, .8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, .1)
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--black);
+            text-decoration: none;
+            letter-spacing: -.5px
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 3rem
+        }
+
+        .nav-menu a {
+            color: var(--black);
+            text-decoration: none;
+            font-size: .875rem;
+            font-weight: 400;
+            transition: opacity .3s
+        }
+
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--black)
+        }
+
+        .hero-content {
+            text-align: center;
+            color: var(--white);
+            z-index: 2;
+            max-width: 800px;
+            padding: 0 2rem
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.125rem, 3vw, 1.5rem);
+            font-weight: 300;
+            margin-bottom: 3rem;
+            opacity: .9
+        }
+
+        .hero-cta {
+            display: inline-block;
+            background: var(--white);
+            color: var(--black);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.125rem;
+            transition: all .3s ease;
+            border: 2px solid transparent
+        }
     </style>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
+
 <body>
     <!-- Menu Minimalista -->
     <nav class="navbar">
@@ -167,24 +475,27 @@
                 <li><a href="#paes" onclick="closeMenu()">Pães</a></li>
                 <li><a href="#galeria" onclick="closeMenu()">Galeria</a></li>
                 <li><a href="javascript:void(0)" onclick="openCakeCalculator(); closeMenu()">Calculadora</a></li>
-                <li><a href="javascript:void(0)" onclick="openConfiguradorEmergencia(); closeMenu()">Configurador</a></li>
+                <li><a href="javascript:void(0)" onclick="openConfiguradorEmergencia(); closeMenu()">Configurador</a>
+                </li>
                 <li><a href="#contato" onclick="closeMenu()">Contato</a></li>
             </ul>
             <div class="nav-controls">
                 <button class="theme-toggle" onclick="toggleDarkMode()" aria-label="Alternar tema">
-                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="5"/>
-                        <line x1="12" y1="1" x2="12" y2="3"/>
-                        <line x1="12" y1="21" x2="12" y2="23"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="1" y1="12" x2="3" y2="12"/>
-                        <line x1="21" y1="12" x2="23" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
                     </svg>
-                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" style="display: none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
                     </svg>
                 </button>
                 <div class="hamburger" id="hamburger" onclick="toggleMenu()">
@@ -194,15 +505,15 @@
                 </div>
             </div>
         </div>
-            </button>
-            <button class="cart-button" onclick="openCart()" aria-label="Carrinho">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 2L7 6H3L6 20H18L21 6H17L15 2H9Z"/>
-                    <path d="M9 10V14"/>
-                    <path d="M15 10V14"/>
-                </svg>
-                <span id="cart-badge" class="cart-badge">0</span>
-            </button>
+        </button>
+        <button class="cart-button" onclick="openCart()" aria-label="Carrinho">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 2L7 6H3L6 20H18L21 6H17L15 2H9Z" />
+                <path d="M9 10V14" />
+                <path d="M15 10V14" />
+            </svg>
+            <span id="cart-badge" class="cart-badge">0</span>
+        </button>
         </div>
     </nav>
 
@@ -225,7 +536,8 @@
         </div>
         <div class="hero-image">
             <!-- Placeholder for cinematic video or high-res image -->
-            <img src="images/downloadgram.org_537499987_17954578145989810_7172687175539727990_n.jpg" alt="Bolo artesanal premium" class="hero-bg-img">
+            <img src="images/downloadgram.org_537499987_17954578145989810_7172687175539727990_n.jpg"
+                alt="Bolo artesanal premium" class="hero-bg-img">
         </div>
     </section>
 
@@ -234,13 +546,15 @@
         <div class="product-content">
             <div class="product-text">
                 <h2 class="product-title">Bolos Decorados</h2>
-                <p class="product-description">A partir de R$ 80,00/kg | 7 massas | 27 sabores de recheios | Coberturas personalizadas</p>
+                <p class="product-description">A partir de R$ 80,00/kg | 7 massas | 27 sabores de recheios | Coberturas
+                    personalizadas</p>
                 <button class="product-cta" onclick="openCakeBuilder()">
                     Montar meu bolo
                 </button>
             </div>
             <div class="product-image">
-                <img src="images/downloadgram.org_461696459_1165667781194474_2951026535375491126_n.jpg" alt="Bolo decorado" loading="lazy">
+                <img src="images/downloadgram.org_461696459_1165667781194474_2951026535375491126_n.jpg"
+                    alt="Bolo decorado" loading="lazy">
             </div>
         </div>
     </section>
@@ -249,7 +563,8 @@
     <section id="bolos-simples" class="product-section dark fade-in">
         <div class="product-content reverse">
             <div class="product-image">
-                <img src="images/downloadgram.org_457382554_1026020162334312_7495785475087312093_n.jpeg" alt="Bolo simples" loading="lazy">
+                <img src="images/downloadgram.org_457382554_1026020162334312_7495785475087312093_n.jpeg"
+                    alt="Bolo simples" loading="lazy">
             </div>
             <div class="product-text">
                 <h2 class="product-title">Bolos Caseirinhos</h2>
@@ -281,11 +596,11 @@
     <section id="galeria" class="gallery-section fade-in">
         <h2 class="gallery-title">Nossos Trabalhos</h2>
         <p class="gallery-subtitle">Explore nossa galeria e encontre inspiração para seu próximo bolo</p>
-        
+
         <div class="gallery-filters">
             <!-- Filtros serão inseridos via JavaScript -->
         </div>
-        
+
         <div class="gallery-grid">
             <!-- Itens serão inseridos via JavaScript -->
         </div>
@@ -308,7 +623,8 @@
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-answer">
-                    <p>Entregamos no dia e horário combinado. Lembrando que os pedidos devem ser feitos com antecedência.</p>
+                    <p>Entregamos no dia e horário combinado. Lembrando que os pedidos devem ser feitos com
+                        antecedência.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -326,7 +642,8 @@
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-answer">
-                    <p>Fazemos entrega em Itirapina, Rio Claro e São Carlos. Valores a combinar. Também oferecemos retirada no local.</p>
+                    <p>Fazemos entrega em Itirapina, Rio Claro e São Carlos. Valores a combinar. Também oferecemos
+                        retirada no local.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -335,7 +652,8 @@
                     <span class="faq-icon">+</span>
                 </button>
                 <div class="faq-answer">
-                    <p>Sim! Use nosso configurador de bolos ou entre em contato pelo WhatsApp para criar um bolo único para sua festa.</p>
+                    <p>Sim! Use nosso configurador de bolos ou entre em contato pelo WhatsApp para criar um bolo único
+                        para sua festa.</p>
                 </div>
             </div>
             <div class="faq-item">
@@ -385,7 +703,8 @@
             </a>
             <a href="https://instagram.com/veralucia_confeitaria" target="_blank" class="contact-instagram">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                 </svg>
                 @veralucia_confeitaria
             </a>
@@ -411,19 +730,26 @@
         <!-- Botão Carrinho -->
         <button onclick="openCart()" class="cart-float" aria-label="Carrinho">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+                <path
+                    d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
             </svg>
             <span id="cart-badge" class="cart-badge">0</span>
         </button>
-        
+
         <!-- Botão WhatsApp -->
-        <a href="https://api.whatsapp.com/send/?phone=5519971307912&text=Olá!%20Vi%20o%20site%20da%20Vera%20Lúcia%20Confeitaria%20e%20gostaria%20de%20fazer%20um%20pedido%20🎂" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+        <a href="https://api.whatsapp.com/send/?phone=5519971307912&text=Olá!%20Vi%20o%20site%20da%20Vera%20Lúcia%20Confeitaria%20e%20gostaria%20de%20fazer%20um%20pedido%20🎂"
+            class="whatsapp-float" target="_blank" aria-label="WhatsApp">
             <svg width="28" height="28" viewBox="0 0 32 32" fill="white">
-                <path d="M16 0C7.164 0 0 7.164 0 16c0 2.825.738 5.488 2.031 7.794L0 32l8.394-2.031C10.7 31.262 13.363 32 16 32c8.836 0 16-7.164 16-16S24.836 0 16 0zm0 29.333c-2.544 0-4.956-.706-7.006-1.931l-.5-.3-5.194 1.256 1.256-5.194-.3-.5C3.039 20.956 2.667 18.544 2.667 16 2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.331-9.869c-.4-.2-2.369-1.169-2.738-1.3-.369-.131-.637-.2-.906.2-.269.4-1.038 1.3-1.275 1.569-.237.269-.475.3-.875.1-.4-.2-1.688-.619-3.213-1.975-1.188-1.056-1.988-2.363-2.219-2.763-.231-.4-.025-.619.175-.819.181-.181.4-.475.6-.712.2-.237.269-.4.4-.669.131-.269.069-.5-.031-.7-.1-.2-.906-2.181-1.244-2.988-.331-.788-.662-.681-.906-.694-.237-.012-.506-.012-.775-.012s-.712.1-1.081.5c-.369.4-1.406 1.375-1.406 3.356s1.438 3.894 1.638 4.163c.2.269 2.825 4.313 6.844 6.05.956.413 1.7.656 2.281.844.956.3 1.825.256 2.513.156.769-.113 2.369-.969 2.7-1.906.331-.938.331-1.738.231-1.906-.1-.169-.369-.269-.769-.469z"/>
+                <path
+                    d="M16 0C7.164 0 0 7.164 0 16c0 2.825.738 5.488 2.031 7.794L0 32l8.394-2.031C10.7 31.262 13.363 32 16 32c8.836 0 16-7.164 16-16S24.836 0 16 0zm0 29.333c-2.544 0-4.956-.706-7.006-1.931l-.5-.3-5.194 1.256 1.256-5.194-.3-.5C3.039 20.956 2.667 18.544 2.667 16 2.667 8.636 8.636 2.667 16 2.667S29.333 8.636 29.333 16 23.364 29.333 16 29.333zm7.331-9.869c-.4-.2-2.369-1.169-2.738-1.3-.369-.131-.637-.2-.906.2-.269.4-1.038 1.3-1.275 1.569-.237.269-.475.3-.875.1-.4-.2-1.688-.619-3.213-1.975-1.188-1.056-1.988-2.363-2.219-2.763-.231-.4-.025-.619.175-.819.181-.181.4-.475.6-.712.2-.237.269-.4.4-.669.131-.269.069-.5-.031-.7-.1-.2-.906-2.181-1.244-2.988-.331-.788-.662-.681-.906-.694-.237-.012-.506-.012-.775-.012s-.712.1-1.081.5c-.369.4-1.406 1.375-1.406 3.356s1.438 3.894 1.638 4.163c.2.269 2.825 4.313 6.844 6.05.956.413 1.7.656 2.281.844.956.3 1.825.256 2.513.156.769-.113 2.369-.969 2.7-1.906.331-.938.331-1.738.231-1.906-.1-.169-.369-.269-.769-.469z" />
             </svg>
             <div class="whatsapp-tooltip">Faça seu pedido!</div>
         </a>
     </div>
+
+    <!-- Three.js para 3D Realista -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <script src="js/script.js" defer></script>
     <script src="js/price-calculator.js" defer></script>
@@ -433,4 +759,5 @@
     <script src="js/visual-configurator.js?v=2.0" defer></script>
     <script src="js/free-3d-fixed.js?v=2.0" defer></script>
 </body>
+
 </html>

@@ -342,11 +342,11 @@ const productsData = {
             '💰 R$ 80,00 / Kg (Massas tradicionais)',
             '',
             '🍰 MASSAS DISPONÍVEIS:',
-            'Tradicional baunilha 🍰 | Coco 🥥 | Leite Ninho 🥛',
-            'Churros 🍮 | Brigadeiro 🍫 | Brigadeiro branco 🍫🥛',
+            'Tradicional Baunilha 🍰 | Coco 🥥 | Leite Ninho 🥛',
+            'Churros 🍮 | Brigadeiro 🍫 | Brigadeiro Branco 🍫🥛',
             '4 Leites 🥛🧈 | Doce de Leite 🍯 | Paçoca 🥜',
             'Beijinho 🥥 | Ameixa 🍑 | Pêssego 🍑',
-            'Abacaxi com coco 🍍🥥 | Morango 🍓',
+            'Abacaxi com Coco 🍍🥥 | Morango 🍓',
             'Red Velvet ❤️ | Chocolate 🍫 | Café ☕',
             '',
             '🎨 COBERTURAS:',
@@ -357,30 +357,30 @@ const productsData = {
             'Massas e recheios clássicos',
             '',
             '⭐ RECHEIOS PREMIUM:',
-            'Leite ninho trufado 🥛🍫',
-            'Trufado de chocolate ao leite 🍫',
-            'Trufado de chocolate meio amargo 🍫',
-            'Trufado de chocolate branco 🍫🥛',
+            'Leite Ninho Trufado 🥛🍫',
+            'Trufado de Chocolate ao Leite 🍫',
+            'Trufado de Chocolate Meio Amargo 🍫',
+            'Trufado de Chocolate Branco 🍫🥛',
             'Alpino 🍫',
             'Oreo 🍪',
             'Maracujá 🍹',
-            'Chocolate amargo 🍫',
-            'Strogonoff de chocolate 🍫🥩',
-            'Strogonoff de morango 🍓🥩',
-            'Brigadeiro de ninho com uva verde 🥛🍇',
-            'Bomba de uva 🍇💥',
+            'Chocolate Amargo 🍫',
+            'Strogonoff de Chocolate 🍫🥩',
+            'Strogonoff de Morango 🍓🥩',
+            'Brigadeiro de Ninho com Uva Verde 🥛🍇',
+            'Bombom de Uva 🍇🍫',
             '',
             '✨ RECHEIOS ESPECIAL:',
             'Ganache 🍫',
-            'Maracujá trufado 🍹🍫',
+            'Maracujá Trufado 🍹🍫',
             'Nutella 🍫',
             'Sonho de Valsa 🍫',
             'Kinder Bueno 🍫',
             'Ouro Branco 🍫',
             'Pistache 🌿',
-            'Doce de leite com nozes 🍯🌰',
-            'Chocolate com morango 🍫🍓',
-            'Cream cheese com geleia de morango 🧀🍓',
+            'Doce de Leite com Nozes 🍯🌰',
+            'Chocolate com Morango 🍫🍓',
+            'Cream Cheese com Geleia de Morango 🧀🍓',
             '',
             '⏰ Prazo: 7 dias',
             '📸 Foto comestível opcional'
@@ -548,35 +548,35 @@ const cakeConfig = {
 };
 
 const massas = [
-    'Tradicional baunilha', 'Coco', 'Leite Ninho', 'Churros',
+    'Tradicional Baunilha', 'Coco', 'Leite Ninho', 'Churros',
     'Red Velvet', 'Chocolate', 'Café'
 ];
 
 const recheios = {
     tradicional: [
-        'Brigadeiro branco',
-        'Brigadeiro coco',
-        'Brigadeiro de ninho',
-        'Brigadeiro tradicional',
-        'Brigadeiro de paçoca',
-        'Doce de leite',
+        'Brigadeiro Branco',
+        'Brigadeiro Coco',
+        'Brigadeiro de Ninho',
+        'Brigadeiro Tradicional',
+        'Brigadeiro de Paçoca',
+        'Doce de Leite',
         'Coco',
-        'Abacaxi com coco',
-        '4 leite',
+        'Abacaxi com Coco',
+        '4 Leites',
         'Paçoca'
     ],
     premium: [
-        'Leite ninho trufado', 'Trufado de chocolate ao leite',
-        'Trufado de chocolate meio amargo', 'Trufado de chocolate branco',
-        'Alpino', 'Oreo', 'Trufado de maracujá', 'Chocolate amargo',
-        'Doce de leite com morango', 'Doce de leite com cereja',
-        'Strogonoff de chocolate', 'Strogonoff de morango',
-        'Brigadeiro de ninho com uva verde', 'Bomba de uva'
+        'Leite Ninho Trufado', 'Trufado de Chocolate ao Leite',
+        'Trufado de Chocolate Meio Amargo', 'Trufado de Chocolate Branco',
+        'Alpino', 'Oreo', 'Trufado de Maracujá', 'Chocolate Amargo',
+        'Doce de Leite com Morango', 'Doce de Leite com Cereja',
+        'Strogonoff de Chocolate', 'Strogonoff de Morango',
+        'Brigadeiro de Ninho com Uva Verde', 'Bombom de Uva'
     ],
     especial: [
         'Nutella', 'Sonho de Valsa', 'Kinder Bueno', 'Ouro Branco', 
-        'Pistache', 'Doce de leite com nozes', 'Chocolate com morango',
-        'Ganache', 'Cream cheese com geleia de morango'
+        'Pistache', 'Doce de Leite com Nozes', 'Chocolate com Morango',
+        'Ganache', 'Cream Cheese com Geleia de Morango'
     ]
 };
 

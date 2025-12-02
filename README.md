@@ -4,7 +4,7 @@ Site institucional da Vera Lúcia Confeitaria com configuradores de bolos person
 
 ## 🚀 Funcionalidades
 
-- **Configurador de Bolos Decorados**: 17 massas, 28 recheios, 4 coberturas, até 4 cores
+- **Configurador de Bolos Decorados**: 17 massas, 33 recheios, 4 coberturas, até 4 cores
 - **Configurador de Bolos Caseirinhos**: 11 sabores, 6 coberturas
 - **Calculadora de Bolo**: Estima peso ideal baseado no número de convidados
 - **Sistema de Carrinho**: Adicione múltiplos produtos antes de enviar para WhatsApp

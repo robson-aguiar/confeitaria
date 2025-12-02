@@ -365,6 +365,10 @@ const productsData = {
             'Oreo 🍪',
             'Maracujá 🍹',
             'Chocolate amargo 🍫',
+            'Strogonoff de chocolate 🍫🥩',
+            'Strogonoff de morango 🍓🥩',
+            'Brigadeiro de ninho com uva verde 🥛🍇',
+            'Bomba de uva 🍇💥',
             '',
             '✨ RECHEIOS ESPECIAL:',
             'Ganache 🍫',
@@ -376,6 +380,7 @@ const productsData = {
             'Pistache 🌿',
             'Doce de leite com nozes 🍯🌰',
             'Chocolate com morango 🍫🍓',
+            'Cream cheese com geleia de morango 🧀🍓',
             '',
             '⏰ Prazo: 7 dias',
             '📸 Foto comestível opcional'
@@ -564,11 +569,14 @@ const recheios = {
         'Leite ninho trufado', 'Trufado de chocolate ao leite',
         'Trufado de chocolate meio amargo', 'Trufado de chocolate branco',
         'Alpino', 'Oreo', 'Trufado de maracujá', 'Chocolate amargo',
-        'Doce de leite com morango', 'Doce de leite com cereja'
+        'Doce de leite com morango', 'Doce de leite com cereja',
+        'Strogonoff de chocolate', 'Strogonoff de morango',
+        'Brigadeiro de ninho com uva verde', 'Bomba de uva'
     ],
     especial: [
         'Nutella', 'Sonho de Valsa', 'Kinder Bueno', 'Ouro Branco', 
-        'Pistache', 'Doce de leite com nozes', 'Chocolate com morango'
+        'Pistache', 'Doce de leite com nozes', 'Chocolate com morango',
+        'Ganache', 'Cream cheese com geleia de morango'
     ]
 };
 
